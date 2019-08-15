@@ -1,0 +1,405 @@
+<body onmousemove="showCoords(event)" onclick="clicouL()">
+  <div id="xablau">
+  <p id="demo"></p>
+  <div id="bola"></div>
+  <div id="azul" onclick="azul()" onmouseover="pare()" onmouseout="continua()"></div>
+  <div id="vermelho" onclick="vermelho()" onmouseover="pare()" onmouseout="continua()"></div> 
+  </div>
+</body>
+
+
+
+
+
+
+
+
+
+var posiX;
+var posiY;
+var bola;
+var bolas=[];
+var lMoveBola;
+var x=0;
+var q = 0;
+var Lclicou
+var corB
+var emCima = 0;
+var posiX1,posiY1,posiX2,posiY2;
+var calX,calY;
+var conta = 1;
+var res;
+var coords
+var bla3=0;
+corB = "red";
+bola = document.getElementById('bola');
+var xablau = document.getElementById("xablau");
+function showCoords(event) {
+  posiX = event.clientX;
+  posiY = event.clientY;
+  coords = res;
+  document.getElementById("demo").innerHTML = coords;
+  posiY -= 25;
+  posiX -= 25;
+  bola.setAttribute("style","top:"+ posiY +"px;left:"+ posiX +"px;");
+}
+function clicouL(){
+  if(q==0){
+    Lclicou = setInterval(clicou,0);
+    q = 1;
+  }else{
+    clearInterval(Lclicou);
+    posiX1 = undefined;
+    posiX2 = undefined;
+    posiY1 = undefined;
+    posiY2 = undefined;
+    q=0;
+  }
+  
+}
+function clicou(){
+  if(emCima == 0){
+  bolas[x] = document.createElement('div');
+  bolas[x].setAttribute("id","bolas");
+  bolas[x].setAttribute("style","top:"+ posiY +"px;left:"+ posiX +"px; background-color:"+corB);
+  xablau.appendChild(bolas[x]);
+
+  //console.log(calX+"-----"+calY+"-----X="+x);
+  contReta();
+  x++;
+  }
+}
+function azul(){
+  corB = "blue";
+}
+function vermelho(){
+  corB = "red";
+  
+}
+function pare(){
+  emCima = 1;
+}
+function continua(){
+  emCima = 0;
+}
+function contReta(){
+  var bla = 0,bla2 = 0;
+  var conta2;
+  var verEntra1=0;
+  var y=0,vamos=0,conta3=0;
+  if(conta == 1 && bla3 == 0){
+    posiX1 = posiX;
+    posiY1 = posiY;
+    conta += 1;
+    bla = 1;
+  }
+  if(conta == 1 && bla3 == 1){
+    posiX1 = posiX2;
+    posiY1 = posiY2;
+    conta +=1;
+    
+  }
+  if(conta == 2 && bla == 0){
+    posiX2 = posiX;
+    posiY2 = posiY;
+    conta = 1;
+    bla2 = 1;
+    bla3 = 1;
+  }
+  if(bla2 == 1){
+    if(posiX1 > posiX2){
+      calX = posiX1 - posiX2;
+    }
+    if(posiX1 < posiX2){
+      calX = posiX2 - posiX1;
+    }
+    if(posiY1 > posiY2){
+      calY = posiY1 - posiY2;
+    }
+    if(posiY1 < posiY2){
+      calY = posiY2 - posiY1;
+    }
+    if(calX >= calY){
+      res = calX / calY;
+      vamos = calX;
+      res = Math.round(res);
+    }
+    if(calX <= calY){
+      res = calY / calX;
+      vamos = calY;
+      res =Math.round(res);
+    }
+  }
+  console.log("xablau"+posiX1+"======="+posiX2);
+  if(posiX1 < posiX2 && posiY1 <= posiY2){
+  //console.log("pimba1");
+  if(calX >= calY){
+  for(y=0;y<=vamos;y++){
+    if(emCima == 0){
+    bolas[x] = document.createElement('div');
+    bolas[x].setAttribute("id","bolas");
+    bolas[x].setAttribute("style","top:"+ posiY1 +"px;left:"+ posiX1 +"px; background-color:"+corB);
+    xablau.appendChild(bolas[x]);
+    x++;
+    if(conta3 >= res){
+      posiY1 += 1;
+      conta3 = 0;
+    }
+    posiX1 += 1;
+    conta3 +=1;
+    }
+  }
+  }
+  if(calX <= calY){
+  for(y=0;y<=vamos;y++){
+    if(emCima == 0){
+    bolas[x] = document.createElement('div');
+    bolas[x].setAttribute("id","bolas");
+    bolas[x].setAttribute("style","top:"+ posiY1 +"px;left:"+ posiX1 +"px; background-color:"+corB);
+    xablau.appendChild(bolas[x]);
+    x++;
+    if(conta3 >= res){
+      posiX1 += 1;
+      conta3 = 0;
+    }
+    posiY1 += 1;
+    conta3 +=1;
+    }
+  }
+  }
+  verEntra1 = 1;
+  }
+  //console.log("xablau"+posiX1+"------"+posiX2);
+  if(posiX1 > posiX2 && posiY1 <= posiY2 && verEntra1 == 0){
+  //console.log("pimba2");
+  if(calX >= calY){
+  for(y=0;y<=vamos;y++){
+    if(emCima == 0){
+    bolas[x] = document.createElement('div');
+    bolas[x].setAttribute("id","bolas");
+    bolas[x].setAttribute("style","top:"+ posiY1 +"px;left:"+ posiX1 +"px; background-color:"+corB);
+    xablau.appendChild(bolas[x]);
+    x++;
+    if(conta3 >= res){
+      posiY1 += 1;
+      conta3 = 0;
+    }
+    posiX1 -= 1;
+    conta3 +=1;
+    }
+  }
+  }
+  if(calX <= calY){
+  for(y=0;y<=vamos;y++){
+    if(emCima == 0){
+    bolas[x] = document.createElement('div');
+    bolas[x].setAttribute("id","bolas");
+    bolas[x].setAttribute("style","top:"+ posiY1 +"px;left:"+ posiX1 +"px; background-color:"+corB);
+    xablau.appendChild(bolas[x]);
+    x++;
+    if(conta3 >= res){
+      posiX1 -= 1;
+      conta3 = 0;
+    }
+    posiY1 += 1;
+    conta3 +=1;
+    }
+  }
+  }
+  verEntra1 = 1;
+  }
+  if(posiX1 < posiX2 && posiY1 >= posiY2 && verEntra1 == 0){
+  //console.log("pimba2");
+  if(calX >= calY){
+  for(y=0;y<=vamos;y++){
+    if(emCima == 0){
+    bolas[x] = document.createElement('div');
+    bolas[x].setAttribute("id","bolas");
+    bolas[x].setAttribute("style","top:"+ posiY1 +"px;left:"+ posiX1 +"px; background-color:"+corB);
+    xablau.appendChild(bolas[x]);
+    x++;
+    if(conta3 >= res){
+      posiY1 -= 1;
+      conta3 = 0;
+    }
+    posiX1 += 1;
+    conta3 +=1;
+    }
+  }
+  }
+  if(calX <= calY){
+  for(y=0;y<=vamos;y++){
+    if(emCima == 0){
+    bolas[x] = document.createElement('div');
+    bolas[x].setAttribute("id","bolas");
+    bolas[x].setAttribute("style","top:"+ posiY1 +"px;left:"+ posiX1 +"px; background-color:"+corB);
+    xablau.appendChild(bolas[x]);
+    x++;
+    if(conta3 >= res){
+      posiX1 += 1;
+      conta3 = 0;
+    }
+    posiY1 -= 1;
+    conta3 +=1;
+    }
+  }
+  }
+  verEntra1 = 1;
+  }
+  if(posiX1 > posiX2 && posiY1 >= posiY2 && verEntra1 == 0){
+  //console.log("pimba2");
+  if(calX >= calY){
+  for(y=0;y<=vamos;y++){
+    if(emCima == 0){
+    bolas[x] = document.createElement('div');
+    bolas[x].setAttribute("id","bolas");
+    bolas[x].setAttribute("style","top:"+ posiY1 +"px;left:"+ posiX1 +"px; background-color:"+corB);
+    xablau.appendChild(bolas[x]);
+    x++;
+    if(conta3 >= res){
+      posiY1 -= 1;
+      conta3 = 0;
+    }
+    posiX1 -= 1;
+    conta3 +=1;
+    }
+  }
+  }
+  if(calX <= calY){
+  for(y=0;y<=vamos;y++){
+    if(emCima == 0){
+    bolas[x] = document.createElement('div');
+    bolas[x].setAttribute("id","bolas");
+    bolas[x].setAttribute("style","top:"+ posiY1 +"px;left:"+ posiX1 +"px; background-color:"+corB);
+    xablau.appendChild(bolas[x]);
+    x++;
+    if(conta3 >= res){
+      posiX1 -= 1;
+      conta3 = 0;
+    }
+    posiY1 -= 1;
+    conta3 +=1;
+    }
+  }
+  }
+  verEntra1 = 1;
+  }
+  if(posiX1== posiX2 && posiY1 > posiY2 && verEntra1 == 0){
+  //console.log("pimba2");
+  if(calX >= calY){
+  for(y=0;y<=vamos;y++){
+    if(emCima == 0){
+    bolas[x] = document.createElement('div');
+    bolas[x].setAttribute("id","bolas");
+    bolas[x].setAttribute("style","top:"+ posiY1 +"px;left:"+ posiX1 +"px; background-color:"+corB);
+    xablau.appendChild(bolas[x]);
+    x++;
+    if(conta3 >= res){
+      posiY1 -= 1;
+      conta3 = 0;
+    }
+    posiX1 -= 1;
+    conta3 +=1;
+    }
+  }
+  }
+  if(calX <= calY){
+  for(y=0;y<=vamos;y++){
+    if(emCima == 0){
+    bolas[x] = document.createElement('div');
+    bolas[x].setAttribute("id","bolas");
+    bolas[x].setAttribute("style","top:"+ posiY1 +"px;left:"+ posiX1 +"px; background-color:"+corB);
+    xablau.appendChild(bolas[x]);
+    x++;
+    if(conta3 >= res){
+      posiX1 -= 1;
+      conta3 = 0;
+    }
+    posiY1 -= 1;
+    conta3 +=1;
+    }
+  }
+  }
+  verEntra1 = 1;
+  }
+  if(posiX1 == posiX2 && posiY1 < posiY2 && verEntra1 == 0){
+  //console.log("pimba2");
+  if(calX >= calY){
+  for(y=0;y<=vamos;y++){
+    if(emCima == 0){
+    bolas[x] = document.createElement('div');
+    bolas[x].setAttribute("id","bolas");
+    bolas[x].setAttribute("style","top:"+ posiY1 +"px;left:"+ posiX1 +"px; background-color:"+corB);
+    xablau.appendChild(bolas[x]);
+    x++;
+    if(conta3 >= res){
+      posiY1+= 1;
+      conta3 = 0;
+    }
+    posiX1 -= 1;
+    conta3 +=1;
+    }
+  }
+  }
+  if(calX <= calY){
+  for(y=0;y<=vamos;y++){
+    if(emCima == 0){
+    bolas[x] = document.createElement('div');
+    bolas[x].setAttribute("id","bolas");
+    bolas[x].setAttribute("style","top:"+ posiY1 +"px;left:"+ posiX1 +"px; background-color:"+corB);
+    xablau.appendChild(bolas[x]);
+    x++;
+    if(conta3 >= res){
+      posiX1 -= 1;
+      conta3 = 0;
+    }
+    posiY1+= 1;
+    conta3 +=1;
+    }
+  }
+  }
+  verEntra1 = 1;
+  }
+  verEntra1 = 0;
+}
+
+
+
+
+
+
+
+body{
+  background-color: white;
+  width: 5000px;
+  height: 5000px;
+  margin: 0px;
+}
+#bola{
+  height: 1px;
+  width: 1px;
+  position: absolute;
+  background-color: red;
+  border-radius:  50px;
+}
+#bolas{
+  height: 1px;
+  width: 1px;
+  position: absolute;
+  background-color: red;
+  border-radius:  50px;
+}
+#azul{
+  height: 50px;
+  width: 50px;
+  top: 150px;
+  position: absolute;
+  background-color: blue;
+}
+#vermelho{
+  height: 50px;
+  width: 50px;
+  top: 200px;
+  position: absolute;
+  background-color: red;
+}
