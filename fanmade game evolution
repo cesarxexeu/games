@@ -1,0 +1,168 @@
+<html>
+<body id="body" onMouseMove="showCords(event)">
+  <div id=disMoney>money: 0</div>
+  <div id="compra1" onclick="compra1()">compra1: $50 </div>
+<style>
+  #body{
+    background-color: white;
+    width: 300px;
+    height: 300px;
+  }
+  #bola1{
+    background-color: red;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    border-radius: 25px;
+    top: 100px;
+    left: 100px;
+  }
+  #bola2{
+    background-color: blue;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    border-radius: 25px;
+    top: 100px;
+    left: 100px;
+  }
+    #bola4{
+    background-color: green;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    border-radius: 25px;
+    top: 100px;
+    left: 100px;
+  }
+  #bola8{
+    background-color: purple;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    border-radius: 25px;
+    top: 100px;
+    left: 100px;
+  }
+  #compra1{
+    background-color: red;
+    width: 70px;
+    position:absolute;
+    top: 50px;
+  }
+</style>
+<script>
+var money=50,disMoney,moneyPerSec = 0;
+var loopVerMoney,loopMoneySec;
+var verCria = 0;
+var left=[],topo=[],bola=[]
+var x = 0;
+var body;
+var moviBola;
+var tempLeft,tempTopo,defLeft,defTopo;
+var loopMovi
+var loopVerColi
+var numBola=[]
+var pimba;
+var numBolaDef
+loopVerColi = setInterval(verColi,100)
+body = document.getElementById("body");
+loopMoneySec = setInterval(moneySec, 1000)
+function clicou1(){
+  money += 1;
+  verCria += 1;
+  document.getElementById("disMoney").innerHTML = "money:" +  money;
+}
+function compra1(){
+  if(money >= 50){
+  bola[x]=document.createElement("div");
+  bola[x].setAttribute("id","bola1");
+  left[x] = Math.floor(Math.random()* 300)
+  topo[x] = Math.floor(Math.random()* 300)
+  bola[x].setAttribute("style","top:"+topo[x]+"px;left:"+left[x]+"px;")
+  bola[x].setAttribute("onclick","clicou1()")
+  bola[x].setAttribute("onMouseDown","movimenta(this)")
+  bola[x].setAttribute("onMouseUp","paraMovi()")
+  bola[x].innerHTML = 1
+  numBola[x] = 1
+  body.appendChild(bola[x])
+
+  moneyPerSec += 1
+  x++;
+  money -= 50;
+}
+}
+function cria(){
+  numBolaDef = numBolaDef * 2
+  console.log(numBolaDef)
+  bola[x]=document.createElement("div");
+  bola[x].setAttribute("id","bola"+numBolaDef);
+  left[x] = defLeft
+  topo[x] = defTopo
+  bola[x].setAttribute("style","top:"+topo[x]+"px;left:"+left[x]+"px;")
+  bola[x].setAttribute("onclick","clicou1()")
+  bola[x].setAttribute("onMouseDown","movimenta(this)")
+  bola[x].setAttribute("onMouseUp","paraMovi()")
+  bola[x].innerHTML = numBolaDef
+  numBola[x] = numBolaDef
+  body.appendChild(bola[x])
+  x++
+  pimba = 0;
+  moneyPerSec += numBolaDef
+}
+function showCords(event){
+  tempLeft = event.clientX -25
+  tempTopo = event.clientY - 25
+
+}
+function moneySec(){
+  money = money + moneyPerSec;
+  document.getElementById("disMoney").innerHTML = "money:" +  money;
+}
+var batata
+function movimenta(moviBola){
+
+  loopMovi = setInterval(moviLoop,10,moviBola)
+}
+function paraMovi(){
+  clearInterval(loopMovi)
+}
+function moviLoop(moviBola){
+
+  for(var y=0;y<=x;y++){
+    if(bola[y] == moviBola){
+      left[y] = tempLeft
+      topo[y] = tempTopo
+      moviBola.setAttribute("style","left:"+left[y]+"px;top:"+topo[y]+"px;")
+    }
+  }
+
+}
+function verColi(){
+  for(var y=0;y<=x;y++){
+    for(var z=0;z<=x && z!= y&&pimba!=1;z++){
+      if((topo[z]+25)>=topo[y]&&(topo[z]+25)<=(topo[y]+50)){
+      if((left[z]+25)>=left[y]&&(left[z]+25)<=(left[y]+50)){
+      if(numBola[z] == numBola[y]){
+        pimba = 1
+        body.removeChild(bola[y])
+        body.removeChild(bola[z])
+        defLeft = left[z]
+        defTopo = topo[z]
+        left[y] = undefined
+        topo[y] = undefined
+        left[z] = undefined
+        topo[z] = undefined
+        numBolaDef = numBola[z];
+        cria()
+        paraMovi();
+      }
+      }
+      }
+    }
+  }
+}
+
+</script>
+</body>
+</html>
