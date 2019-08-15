@@ -5,8 +5,8 @@
 <style>
   #body{
     background-color: white;
-    width: 300px;
-    height: 300px;
+    width: 600px;
+    height: 600px;
   }
   #bola1{
     background-color: red;
@@ -47,6 +47,7 @@
   #compra1{
     background-color: red;
     width: 70px;
+    height: 40px;
     position:absolute;
     top: 50px;
   }
@@ -63,7 +64,7 @@ var tempLeft,tempTopo,defLeft,defTopo;
 var loopMovi
 var loopVerColi
 var numBola=[]
-var pimba;
+var pimba,ximba;
 var numBolaDef
 loopVerColi = setInterval(verColi,100)
 body = document.getElementById("body");
@@ -72,6 +73,7 @@ function clicou1(){
   money += 1;
   verCria += 1;
   document.getElementById("disMoney").innerHTML = "money:" +  money;
+
 }
 function compra1(){
   if(money >= 50){
@@ -121,11 +123,16 @@ function moneySec(){
 }
 var batata
 function movimenta(moviBola){
-
-  loopMovi = setInterval(moviLoop,10,moviBola)
+  if(ximba == 0){
+     loopMovi = setInterval(moviLoop,10,moviBola)
+     ximba = 1;
+  }
+  
 }
 function paraMovi(){
   clearInterval(loopMovi)
+  ximba = 1;
+  setTimeout(ximba = 0, 300)
 }
 function moviLoop(moviBola){
 
