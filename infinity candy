@@ -1,0 +1,1103 @@
+<html>
+  <body>
+    <div id="tela"></div>
+  </body>
+  <style>
+body{
+  margin: 0px;
+}
+#caixa1{
+  width: 50px;
+  height: 50px;
+  background-color: red;
+  position: absolute;
+  z-index: 1;
+}
+#caixa2{
+  width: 50px;
+  height: 50px;
+  background-color: blue;
+  position: absolute;
+  z-index: 1;
+}
+#caixa3{
+  width: 50px;
+  height: 50px;
+  background-color: yellow;
+  position: absolute;
+  z-index: 1;
+}
+#caixa4{
+  width: 50px;
+  height: 50px;
+  background-color: green;
+  position: absolute;
+  z-index: 1;
+}
+#caixaGel{
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  opacity: 0.50;
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+}
+#ganhou{
+  width: 250px;
+  height: 250px;
+  padding-top: 200px;
+  padding-left:180px;
+  background-color: green;
+  position: absolute;
+  z-index: 4;
+}
+#perdeu{
+  width: 250px;
+  height: 250px;
+  padding-top: 200px;
+  padding-left:180px;
+  background-color: red;
+  position: absolute;
+  z-index: 4;
+}
+#mostra{
+  height: 500px;
+  width: 500px;
+  background-color: purple;
+  position: absolute;
+}
+
+  </style>
+  <script>
+var caixa1=[],caixa2=[],caixa3=[],caixa4=[],caixa1Gel=[];
+var verifica=[],posicaoT=[],posicaoL=[],posicaoGelT=[],posicaoGelL=[],verCriGel=[];
+var tela;
+var lAtt;
+var guarda=0,guarda1=0,guarda2=0,inicio,gel=0;
+var x=0,z=0,topo=[],left=[],p=0,l=0,inicio=0;
+var vercaixa=[],verVer=[];
+var con=0;
+var pimbaColi;
+var lPimba;
+var varFila=[];
+var salvaCa=[];
+var topo2=[];
+var verRep=[];
+var LopVerGanha, lopReGel;
+var ganhou;
+var verGel=[];
+var mostra = document.getElementById("mostra");
+var contaJog = 0;
+LopVerGanha = setInterval(VerGanha,300);
+function VerGanha(){
+  if(contaJog >= 7){
+    ganhou = document.createElement('div');
+    ganhou.setAttribute("id","perdeu");
+    ganhou.innerHTML = "voce perdeu"
+    tela.appendChild(ganhou);
+    console.log("pimba");
+  }
+  if(gel >= 9){
+    ganhou = document.createElement('div');
+    ganhou.setAttribute("id","ganhou");
+    ganhou.innerHTML = "voce ganhou"
+    tela.appendChild(ganhou);
+    console.log("pimba2");
+  }
+}
+tela = document.getElementById('tela');
+inicio = 0;
+att();
+posicaoL[0]=0;
+posicaoT[0]=0;
+function att(){
+  var y=0;
+  x=0;
+  topo = 0;
+  left = 0;
+  while(y < 40){
+  if(x<=7){
+    cria();
+    topo += 55;
+  }else if(x<=15){
+    if(x==8){
+      left = 55;
+      topo = 0;
+      cria();
+    }
+    if(x>8){
+      topo+=55;
+      cria();
+      if(x>=10 && x<=12){
+        criaGel();
+      }
+    }
+  }else if(x<=23){
+    if(x==16){
+      left = 110;
+      topo = 0;
+      cria();
+    }else{
+      topo+=55;
+      cria();
+      if(x>=18 && x<=20){
+        criaGel();
+      }
+    }
+  }else if(x<31){
+    if(x==24){
+      left = 165;
+      topo = 0;
+      cria();
+    }else{
+      topo+=55;
+      cria();
+      if(x>=26 && x<=28){
+        criaGel();
+      }
+    }
+  }else if(x<=39){
+    if(x==32){
+      left = 220;
+      topo = 0;
+      cria();
+    }else{
+      topo+=55;
+      cria();
+    }
+  }
+   x += 1;
+   y += 1;
+}
+inicio = 1;
+}
+
+function cria(){
+  var varia;
+  if(inicio==0){
+     varia = Math.floor(Math.random()*4);
+    if(varia == 0){
+      caixa1[x] = document.createElement('div');
+      caixa1[x].setAttribute("id","caixa1");
+      caixa1[x].setAttribute("style","top:"+topo+"px;left:"+left+"px;");
+      verifica[x]=0;
+      caixa1[x].setAttribute("onmousedown","treta(this,verifica[x])")
+      tela.appendChild(caixa1[x]);
+      posicaoT[x]=topo;
+      posicaoL[x]=left;
+      salvaCa[x] = caixa1[x];
+      
+    }
+    if(varia == 1){
+      caixa1[x] = document.createElement('div');
+      caixa1[x].setAttribute("id","caixa2");
+      caixa1[x].setAttribute("style","top:"+topo+"px;left:"+left+"px;");
+      verifica[x]=1;
+      caixa1[x].setAttribute("onmousedown","treta(this,verifica[x])")
+      tela.appendChild(caixa1[x]);
+      posicaoT[x]=topo;
+      posicaoL[x]=left;
+      salvaCa[x] = caixa1[x];
+    }
+    
+    if(varia == 2){
+      caixa1[x] = document.createElement('div');
+      caixa1[x].setAttribute("id","caixa3");
+      caixa1[x].setAttribute("style","top:"+topo+"px;left:"+left+"px;");
+      verifica[x]=2;
+      caixa1[x].setAttribute("onmousedown","treta(this,verifica[x])")
+      tela.appendChild(caixa1[x]);
+      posicaoT[x]=topo;
+      posicaoL[x]=left;
+      salvaCa[x] = caixa1[x];
+    }
+  
+    if(varia == 3){
+      caixa1[x] = document.createElement('div');
+      caixa1[x].setAttribute("id","caixa4");
+      caixa1[x].setAttribute("style","top:"+topo+"px;left:"+left+"px;");
+      verifica[x]=3;
+      caixa1[x].setAttribute("onmousedown","treta(this,verifica[x])");
+      tela.appendChild(caixa1[x]);
+      posicaoT[x]=topo;
+      posicaoL[x]=left;
+      salvaCa[x] = caixa1[x];
+    }
+  }
+}
+function criaGel(){
+  caixa1Gel[x] = document.createElement('div');
+  caixa1Gel[x].setAttribute("id","caixaGel");
+  caixa1Gel[x].setAttribute("style","top:"+topo+"px;left:"+left+"px;");
+  tela.appendChild(caixa1Gel[x]);
+  posicaoGelT[x]=topo;
+  posicaoGelL[x]=left;
+}
+function cria2(){
+  var a1 = 0,a2 = 0,a3 = 0,a4 = 0;
+  var d;
+  var varia;
+  var guardaAux;
+  for(d=0;d<=39;d++){
+    topo2[d] = 0;
+    if(guarda2 < guarda1){
+      guardaAux = guarda1;
+      guarda1 = guarda2;
+      guarda2 = guardaAux;
+    }
+    if(guarda1 < guarda){
+      guardaAux = guarda;
+      guarda = guarda1;
+      guarda1 = guardaAux;
+    }
+    if(d == guarda || d == guarda1 || d == guarda2){
+    if(varFila[guarda] == varFila[guarda1] && varFila[guarda] != varFila[guarda2]){
+    if(d!=guarda && a1 ==0){
+      topo2[d] = 55;
+      a1 = 1;
+    }
+    }
+    if(varFila[guarda] == varFila[guarda2]){
+    if(d!=guarda){
+      topo2[d] = 55;
+      a2 = 1;
+    }
+    }
+    if(varFila[guarda1] == varFila[guarda2]){
+    if(d!=guarda && a3 == 0){
+      topo2[d] = 55;
+      a3 = 1;
+    }
+    }
+    if(varFila[guarda] == varFila[guarda1] && varFila[guarda] == varFila[guarda2]){
+    if(d == guarda2){
+    if(a4 == 0){
+      topo2[d] = 110;
+      a4= 1;
+    }
+    }
+    }
+    if(varFila[d] == 1){
+    varia = Math.floor(Math.random()*4);
+    if(varia == 0){
+      caixa1[d].setAttribute("id","caixa1");
+      caixa1[d].setAttribute("style","top:"+ topo2[d] +"px;left:"+ 0 +"px;");
+      verifica[d]=0;
+      caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])")
+      posicaoT[d]=topo2[d];
+      posicaoL[d]=0;
+      salvaCa[d] = caixa1[d];
+      verRep[d] = 1;
+      
+    }
+    if(varia == 1){
+      caixa1[d].setAttribute("id","caixa2");
+      caixa1[d].setAttribute("style","top:"+ topo2[d] +"px;left:"+ 0 +"px;");
+      verifica[d]=1;
+      caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])")
+      posicaoT[d]=topo2[d];
+      posicaoL[d]=0;
+      salvaCa[d] = caixa1[d];
+      verRep[d] = 1;
+    }
+    
+    if(varia == 2){
+      caixa1[d].setAttribute("id","caixa3");
+      caixa1[d].setAttribute("style","top:"+ topo2[d] +"px;left:"+ 0 +"px;");
+      verifica[d]=2;
+      caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])")
+      posicaoT[d]=topo2[d];
+      posicaoL[d]=0;
+      salvaCa[d] = caixa1[d];
+      verRep[d] = 1;
+    }
+  
+    if(varia == 3){
+      caixa1[d].setAttribute("id","caixa4");
+      caixa1[d].setAttribute("style","top:"+ topo2[d] +"px;left:"+ 0 +"px;");
+      verifica[d]=3;
+      caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])");
+      posicaoT[d]=topo2[d];
+      posicaoL[d]=0;
+      salvaCa[d] = caixa1[d];
+  }
+    
+  }
+    if(varFila[d] == 2){
+      varia = Math.floor(Math.random()*4);
+      if(varia == 0){
+        caixa1[d].setAttribute("id","caixa1");
+        caixa1[d].setAttribute("style","top:"+ topo2[d] +"px;left:"+ 55 +"px;");
+        verifica[d]=0;
+        caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])")
+        posicaoT[d]=topo2[d];
+        posicaoL[d]=55;
+        salvaCa[d] = caixa1[d];
+        verRep[d] = 1;
+        
+        
+      }
+      if(varia == 1){
+        caixa1[d].setAttribute("id","caixa2");
+        caixa1[d].setAttribute("style","top:"+ topo2[d] +"px;left:"+ 55 +"px;");
+        verifica[d]=1;
+        caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])")
+        posicaoT[d]=topo2[d];
+        posicaoL[d]=55;
+        salvaCa[d] = caixa1[d];
+        verRep[d] = 1;
+      }
+      
+      if(varia == 2){
+        caixa1[d].setAttribute("id","caixa3");
+        caixa1[d].setAttribute("style","top:"+ topo2[d] +"px;left:"+ 55 +"px;");
+        verifica[d]=2;
+        caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])")
+        posicaoT[d]=topo2[d];
+        posicaoL[d]=55;
+        salvaCa[d] = caixa1[d];
+        verRep[d] = 1;
+      }
+    
+      if(varia == 3){
+        caixa1[d].setAttribute("id","caixa4");
+        caixa1[d].setAttribute("style","top:"+ topo2[d]+"px;left:"+ 55 +"px;");
+        verifica[d]=3;
+        caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])");
+        posicaoT[d]=topo2[d];
+        posicaoL[d]=55;
+        salvaCa[d] = caixa1[d];
+        verRep[d] = 1;
+    }
+    
+  }
+    if(varFila[d] == 3){
+      varia = Math.floor(Math.random()*4);
+      if(varia == 0){
+        caixa1[d].setAttribute("id","caixa1");
+        caixa1[d].setAttribute("style","top:"+ topo2[d] +"px;left:"+ 110 +"px;");
+        verifica[d]=0;
+        caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])")
+        posicaoT[d]=topo2[d];
+        posicaoL[d]=110;
+       salvaCa[d] = caixa1[d];
+       verRep[d] = 1;
+        
+      }
+      if(varia == 1){
+        caixa1[d].setAttribute("id","caixa2");
+        caixa1[d].setAttribute("style","top:"+ topo2[d] +"px;left:"+ 110 +"px;");
+        verifica[d]=1;
+        caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])");
+        posicaoT[d]=topo2[d];
+        posicaoL[d]=110;
+        salvaCa[d] = caixa1[d];
+        verRep[d] = 1;
+      }
+      
+      if(varia == 2){
+        caixa1[d].setAttribute("id","caixa3");
+        caixa1[d].setAttribute("style","top:"+ topo2[d] +"px;left:"+ 110 +"px;");
+        verifica[d]=2;
+        caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])");
+        posicaoT[d]=topo2[d];
+        posicaoL[d]=110;
+        salvaCa[d] = caixa1[d];
+        verRep[d] = 1;
+      }
+    
+      if(varia == 3){
+        caixa1[d].setAttribute("id","caixa4");
+        caixa1[d].setAttribute("style","top:"+ topo2[d] +"px;left:"+ 110 +"px;");
+        verifica[d]=3;
+        caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])");
+        posicaoT[d]=topo2[d];
+        posicaoL[d]=110;
+        salvaCa[d] = caixa1[d];
+        verRep[d] = 1;
+    }
+    
+  }
+    if(varFila[d] == 4){
+      varia = Math.floor(Math.random()*4);
+      if(varia == 0){
+        caixa1[d].setAttribute("id","caixa1");
+        caixa1[d].setAttribute("style","top:"+ topo2[d] +"px;left:"+ 165 +"px;");
+        verifica[d]=0;
+        caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])")
+        posicaoT[d]=topo2[d];
+        posicaoL[d]=165;
+        salvaCa[d] = caixa1[d];
+        verRep[d] = 1;
+        
+      }
+      if(varia == 1){
+        caixa1[d].setAttribute("id","caixa2");
+        caixa1[d].setAttribute("style","top:"+ topo2[d] +"px;left:"+ 165 +"px;");
+        verifica[d]=1;
+        caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])")
+        posicaoT[d]=topo2[d];
+        posicaoL[d]=165;
+        salvaCa[d] = caixa1[d];
+        verRep[d] = 1;
+      }
+      
+      if(varia == 2){
+        caixa1[d].setAttribute("id","caixa3");
+        caixa1[d].setAttribute("style","top:"+ topo2[d] +"px;left:"+ 165 +"px;");
+        verifica[d]=2;
+        caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])")
+        posicaoT[d]=topo2[d];
+        posicaoL[d]=165;
+        salvaCa[d] = caixa1[d];
+        verRep[d] = 1;
+      }
+    
+      if(varia == 3){
+        caixa1[d].setAttribute("id","caixa4");
+        caixa1[d].setAttribute("style","top:"+ topo2[d] +"px;left:"+ 165 +"px;");
+        verifica[d]=3;
+        caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])");
+        posicaoT[d]=topo2[d];
+        posicaoL[d]=165;
+        salvaCa[d] = caixa1[d];
+        verRep[d] = 1;
+    }
+    
+  }
+    if(varFila[d] == 5){
+      varia = Math.floor(Math.random()*4);
+      if(varia == 0){
+        caixa1[d].setAttribute("id","caixa1");
+        caixa1[d].setAttribute("style","top:"+ topo2[d] +"px;left:"+ 220 +"px;");
+        verifica[d]=0;
+        caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])")
+        posicaoT[d]=topo2[d];
+        posicaoL[d]=220;
+        salvaCa[d] = caixa1[d];
+        verRep[d] = 1;
+        
+      }
+      if(varia == 1){
+        caixa1[d].setAttribute("id","caixa2");
+        caixa1[d].setAttribute("style","top:"+ topo2[d] +"px;left:"+ 220 +"px;");
+        verifica[d]=1;
+        caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])")
+        posicaoT[d]=topo2[d];
+        posicaoL[d]=220;
+        salvaCa[d] = caixa1[d];
+        verRep[d] = 1;
+      }
+      
+      if(varia == 2){
+        caixa1[d].setAttribute("id","caixa3");
+        caixa1[d].setAttribute("style","top:"+ topo2[d] +"px;left:"+ 220 +"px;");
+        verifica[d]=2;
+        caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])")
+        posicaoT[d]=topo2[d];
+        posicaoL[d]=220;
+        salvaCa[d] = caixa1[d];
+        verRep[d] = 1;
+      }
+    
+      if(varia == 3){
+        caixa1[d].setAttribute("id","caixa4");
+        caixa1[d].setAttribute("style","top:"+ topo2[d] +"px;left:"+ 220 +"px;");
+        verifica[d]=3;
+        caixa1[d].setAttribute("onmousedown","treta(this,verifica[x])");
+        posicaoT[d]=topo2[d];
+        posicaoL[d]=220;
+        salvaCa[d] = caixa1[d];
+        verRep[d] = 1;
+    }
+  }
+  }
+  }
+guarda = 0;
+guarda1 = 0;
+guarda2 = 0;
+verVer[0]=undefined;
+verVer[1]=undefined;
+verVer[2]=undefined;
+con=0;
+l=0;
+}
+
+function fila(){
+  var b,b2
+  if(guarda >= 0 && guarda <= 7){
+    for(b=0;b<=7;b++){
+      if(verRep[guarda] == 1){
+        if(posicaoT[b] < posicaoT[guarda]){
+        posicaoT[b] += 55;
+        varFila[b] = 1;
+        caixa1[b].setAttribute("style","top:"+ posicaoT[b] +"px;left:"+posicaoL[b]+"px;");
+        salvaCa[b] = caixa1[b];
+        }
+      }else if(b <= guarda || verRep[b] == 1){
+      posicaoT[b] += 55;
+      varFila[b] = 1;
+      caixa1[b].setAttribute("style","top:"+ posicaoT[b] +"px;left:"+posicaoL[b]+"px;");
+      salvaCa[b] = caixa1[b];
+    }
+    if(posicaoGelL[b] == posicaoL[b] && posicaoGelT[b] == posicaoT[b]){
+      verCriGel[b] = 1;
+    }
+    }
+  verVer[0]=undefined;
+  verVer[1]=undefined;
+  verVer[2]=undefined;
+  con=0;
+  l=0;
+  }
+  if(guarda >= 8 && guarda <= 15){
+    for(b=8;b<=15;b++){
+      if(verRep[guarda] == 1){
+        if(posicaoT[b] < posicaoT[guarda]){
+        posicaoT[b] += 55;
+        varFila[b] = 2;
+        caixa1[b].setAttribute("style","top:"+ posicaoT[b] +"px;left:"+posicaoL[b]+"px;");
+        salvaCa[b] = caixa1[b];
+        }
+      }else if(b <= guarda || verRep[b] == 1){
+      posicaoT[b] += 55;
+      varFila[b] = 2;
+      caixa1[b].setAttribute("style","top:"+posicaoT[b]+"px;left:"+posicaoL[b]+"px;");
+      salvaCa[b] = caixa1[b];
+      }
+    if(posicaoGelL[b] == posicaoL[b] && posicaoGelT[b] == posicaoT[b]){
+      verCriGel[b] = 1;
+    }
+    }
+  verVer[0]=undefined;
+  verVer[1]=undefined;
+  verVer[2]=undefined;
+  con=0;
+  l=0;
+  }
+  if(guarda >= 16 && guarda <= 23){
+    for(b=16;b<=23;b++){
+      if(verRep[guarda] == 1){
+        if(posicaoT[b] < posicaoT[guarda]){
+        posicaoT[b] += 55;
+        varFila[b] = 3;
+        caixa1[b].setAttribute("style","top:"+ posicaoT[b] +"px;left:"+posicaoL[b]+"px;");
+        salvaCa[b] = caixa1[b];
+        }
+      }else if(b <= guarda || verRep[b] == 1){
+      posicaoT[b] += 55;
+      varFila[b] = 3;
+      caixa1[b].setAttribute("style","top:"+posicaoT[b]+"px;left:"+posicaoL[b]+"px;");
+      salvaCa[b] = caixa1[b];
+      }
+    if(posicaoGelL[b] == posicaoL[b] && posicaoGelT[b] == posicaoT[b]){
+      verCriGel[b] = 1;
+    }
+    }
+  verVer[0]=undefined;
+  verVer[1]=undefined;
+  verVer[2]=undefined;
+  con=0;
+  l=0;
+  }
+  if(guarda >= 24 && guarda <= 31){
+    for(b=24;b<=31;b++){
+      if(verRep[guarda] == 1){
+        if(posicaoT[b] < posicaoT[guarda]){
+        posicaoT[b] += 55;
+        varFila[b] = 4;
+        caixa1[b].setAttribute("style","top:"+ posicaoT[b] +"px;left:"+posicaoL[b]+"px;");
+        salvaCa[b] = caixa1[b];
+        }
+      }else if(b <= guarda || verRep[b] == 1){
+      posicaoT[b] += 55;
+      varFila[b] = 4;
+      caixa1[b].setAttribute("style","top:"+posicaoT[b]+"px;left:"+posicaoL[b]+"px;");
+      salvaCa[b] = caixa1[b];
+      }
+    if(posicaoGelL[b] == posicaoL[b] && posicaoGelT[b] == posicaoT[b]){
+      verCriGel[b] = 1;
+    }
+    }
+  verVer[0]=undefined;
+  verVer[1]=undefined;
+  verVer[2]=undefined;
+  con=0;
+  l=0;
+  }
+  if(guarda >= 32 && guarda <= 39){
+    for(b=32;b<=39;b++){
+      if(verRep[guarda] == 1){
+        if(posicaoT[b] < posicaoT[guarda]){
+        posicaoT[b] += 55;
+        varFila[b] = 5;
+        caixa1[b].setAttribute("style","top:"+ posicaoT[b] +"px;left:"+posicaoL[b]+"px;");
+        salvaCa[b] = caixa1[b];
+        }
+      }else if(b <= guarda || verRep[b] == 1){
+      posicaoT[b] += 55;
+      varFila[b] = 5;
+      caixa1[b].setAttribute("style","top:"+posicaoT[b]+"px;left:"+posicaoL[b]+"px;");
+      salvaCa[b] = caixa1[b];
+      }
+    if(posicaoGelL[b] == posicaoL[b] && posicaoGelT[b] == posicaoT[b]){
+      verCriGel[b] = 1;
+    }
+    }
+  verVer[0]=undefined;
+  verVer[1]=undefined;
+  verVer[2]=undefined;
+  con=0;
+  l=0;
+  }
+   if(guarda1 >= 0 && guarda1 <= 7){
+    for(b=0;b<=7;b++){
+      if(verRep[guarda1] == 1){
+        if(posicaoT[b] < posicaoT[guarda1]){
+        posicaoT[b] += 55;
+        varFila[b] = 1;
+        caixa1[b].setAttribute("style","top:"+ posicaoT[b] +"px;left:"+posicaoL[b]+"px;");
+        salvaCa[b] = caixa1[b];
+        }
+      }else if(b <= guarda1 || verRep[b] == 1){
+      posicaoT[b] += 55;
+      varFila[b] = 1;
+      caixa1[b].setAttribute("style","top:"+posicaoT[b]+"px;left:"+posicaoL[b]+"px;");
+      salvaCa[b] = caixa1[b];
+      }
+    if(posicaoGelL[b] == posicaoL[b] && posicaoGelT[b] == posicaoT[b]){
+      verCriGel[b] = 1;
+    }
+    }
+  verVer[0]=undefined;
+  verVer[1]=undefined;
+  verVer[2]=undefined;
+  con=0;
+  l=0;
+  }
+  if(guarda1 >= 8 && guarda1 <= 15){
+    for(b=8;b<=15;b++){
+      if(verRep[guarda1] == 1){
+        if(posicaoT[b] < posicaoT[guarda1]){
+        posicaoT[b] += 55;
+        varFila[b] = 2;
+        caixa1[b].setAttribute("style","top:"+ posicaoT[b] +"px;left:"+posicaoL[b]+"px;");
+        salvaCa[b] = caixa1[b];
+        }
+      }else if(b <= guarda1 || verRep[b] == 1){
+      posicaoT[b] += 55;
+      varFila[b] = 2;
+      caixa1[b].setAttribute("style","top:"+posicaoT[b]+"px;left:"+posicaoL[b]+"px;");
+      salvaCa[b] = caixa1[b];
+      }
+    if(posicaoGelL[b] == posicaoL[b] && posicaoGelT[b] == posicaoT[b]){
+      verCriGel[b] = 1;
+    }
+    }
+  verVer[0]=undefined;
+  verVer[1]=undefined;
+  verVer[2]=undefined;
+  con=0;
+  l=0;
+  }
+  if(guarda1 >= 16 && guarda1 <= 23){
+    for(b=16;b<=23;b++){
+      if(verRep[guarda1] == 1){
+        if(posicaoT[b] < posicaoT[guarda1]){
+        posicaoT[b] += 55;
+        varFila[b] = 3;
+        caixa1[b].setAttribute("style","top:"+ posicaoT[b] +"px;left:"+posicaoL[b]+"px;");
+        salvaCa[b] = caixa1[b];
+        }
+      }else if(b <= guarda1 || verRep[b] == 1){
+      posicaoT[b] += 55;
+      varFila[b] = 3;
+      caixa1[b].setAttribute("style","top:"+posicaoT[b]+"px;left:"+posicaoL[b]+"px;");
+      salvaCa[b] = caixa1[b];
+      }
+    if(posicaoGelL[b] == posicaoL[b] && posicaoGelT[b] == posicaoT[b]){
+      verCriGel[b] = 1;
+    }
+    }
+  verVer[0]=undefined;
+  verVer[1]=undefined;
+  verVer[2]=undefined;
+  con=0;
+  l=0;
+  }
+  if(guarda1 >= 24 && guarda1 <= 31){
+    for(b=24;b<=31;b++){
+      if(verRep[guarda1] == 1){
+        if(posicaoT[b] < posicaoT[guarda1]){
+        posicaoT[b] += 55;
+        varFila[b] = 4;
+        caixa1[b].setAttribute("style","top:"+ posicaoT[b] +"px;left:"+posicaoL[b]+"px;");
+        salvaCa[b] = caixa1[b];
+        }
+      }else if(b <= guarda1 || verRep[b] == 1){
+      posicaoT[b] += 55;
+      varFila[b] = 4;
+      caixa1[b].setAttribute("style","top:"+posicaoT[b]+"px;left:"+posicaoL[b]+"px;");
+      salvaCa[b] = caixa1[b];
+      }
+    if(posicaoGelL[b] == posicaoL[b] && posicaoGelT[b] == posicaoT[b]){
+      verCriGel[b] = 1;
+    }
+    }
+  verVer[0]=undefined;
+  verVer[1]=undefined;
+  verVer[2]=undefined;
+  con=0;
+  l=0;
+  }
+  if(guarda1 >= 32 && guarda1 <= 39){
+    for(b=32;b<=39;b++){
+      if(verRep[guarda1] == 1){
+        if(posicaoT[b] < posicaoT[guarda1]){
+        posicaoT[b] += 55;
+        varFila[b] = 5;
+        caixa1[b].setAttribute("style","top:"+ posicaoT[b] +"px;left:"+posicaoL[b]+"px;");
+        salvaCa[b] = caixa1[b];
+        }
+      }else if(b <= guarda1 || verRep[b] == 1){
+      posicaoT[b] += 55;
+      varFila[b] = 5;
+      caixa1[b].setAttribute("style","top:"+posicaoT[b]+"px;left:"+posicaoL[b]+"px;");
+      salvaCa[b] = caixa1[b];
+      }
+    if(posicaoGelL[b] == posicaoL[b] && posicaoGelT[b] == posicaoT[b]){
+      verCriGel[b] = 1;
+    }
+    }
+  verVer[0]=undefined;
+  verVer[1]=undefined;
+  verVer[2]=undefined;
+  con=0;
+  l=0;
+  }
+   if(guarda2 >= 0 && guarda2 <= 7){
+    for(b=0;b<=7;b++){
+      if(verRep[guarda2] == 1){
+        if(posicaoT[b] < posicaoT[guarda2]){
+        posicaoT[b] += 55;
+        varFila[b] = 1;
+        caixa1[b].setAttribute("style","top:"+ posicaoT[b] +"px;left:"+posicaoL[b]+"px;");
+        salvaCa[b] = caixa1[b];
+        }
+      }else
+      if(b <= guarda2 || verRep[b] == 1){
+      posicaoT[b] += 55;
+      varFila[b] = 1;
+      caixa1[b].setAttribute("style","top:"+posicaoT[b]+"px;left:"+posicaoL[b]+"px;");
+      salvaCa[b] = caixa1[b];
+      }
+    if(posicaoGelL[b] == posicaoL[b] && posicaoGelT[b] == posicaoT[b]){
+      verCriGel[b] = 1;
+    }
+    }
+  verVer[0]=undefined;
+  verVer[1]=undefined;
+  verVer[2]=undefined;
+  con=0;
+  l=0;
+  }
+  if(guarda2 >= 8 && guarda2 <= 15){
+    for(b=8;b<=15;b++){
+      if(verRep[guarda2] == 1){
+        if(posicaoT[b] < posicaoT[guarda2]){
+        posicaoT[b] += 55;
+        varFila[b] = 2;
+        caixa1[b].setAttribute("style","top:"+ posicaoT[b] +"px;left:"+posicaoL[b]+"px;");
+        salvaCa[b] = caixa1[b];
+        }
+      }else if(b <= guarda2 || verRep[b] == 1){
+      posicaoT[b] += 55;
+      varFila[b] = 2;
+      caixa1[b].setAttribute("style","top:"+posicaoT[b]+"px;left:"+posicaoL[b]+"px;");
+      salvaCa[b] = caixa1[b];
+      }
+    if(posicaoGelL[b] == posicaoL[b] && posicaoGelT[b] == posicaoT[b]){
+      verCriGel[b] = 1;
+    }
+    }
+  verVer[0]=undefined;
+  verVer[1]=undefined;
+  verVer[2]=undefined;
+  con=0;
+  l=0;
+  }
+  if(guarda2 >= 16 && guarda2 <= 23){
+    for(b=16;b<=23;b++){
+      if(verRep[guarda2] == 1){
+        if(posicaoT[b] < posicaoT[guarda2]){
+        posicaoT[b] += 55;
+        varFila[b] = 3;
+        caixa1[b].setAttribute("style","top:"+ posicaoT[b] +"px;left:"+posicaoL[b]+"px;");
+        salvaCa[b] = caixa1[b];
+        }
+      }else if(b <= guarda2 || verRep[b] == 1){
+      posicaoT[b] += 55;
+      varFila[b] = 3;
+      caixa1[b].setAttribute("style","top:"+posicaoT[b]+"px;left:"+posicaoL[b]+"px;");
+      salvaCa[b] = caixa1[b];
+      }
+    if(posicaoGelL[b] == posicaoL[b] && posicaoGelT[b] == posicaoT[b]){
+      verCriGel[b] = 1;
+    }
+    }
+  verVer[0]=undefined;
+  verVer[1]=undefined;
+  verVer[2]=undefined;
+  con=0;
+  l=0;
+  }
+  if(guarda2 >= 24 && guarda2 <= 31){
+    for(b=24;b<=31;b++){
+      if(verRep[guarda2] == 1){
+        if(posicaoT[b] < posicaoT[guarda2]){
+        posicaoT[b] += 55;
+        varFila[b] = 4;
+        caixa1[b].setAttribute("style","top:"+ posicaoT[b] +"px;left:"+posicaoL[b]+"px;");
+        salvaCa[b] = caixa1[b];
+        }
+      }else if(b <= guarda2 || verRep[b] == 1){
+      posicaoT[b] += 55;
+      varFila[b] = 4;
+      caixa1[b].setAttribute("style","top:"+posicaoT[b]+"px;left:"+posicaoL[b]+"px;");
+      salvaCa[b] = caixa1[b];
+      }
+    if(posicaoGelL[b] == posicaoL[b] && posicaoGelT[b] == posicaoT[b]){
+      verCriGel[b] = 1;
+    }
+    }
+  verVer[0]=undefined;
+  verVer[1]=undefined;
+  verVer[2]=undefined;
+  con=0;
+  l=0;
+  }
+  if(guarda2 >= 32 && guarda2 <= 39){
+    for(b=32;b<=39;b++){
+      if(verRep[guarda2] == 1){
+        if(posicaoT[b] < posicaoT[guarda2]){
+        posicaoT[b] += 55;
+        varFila[b] = 5;
+        caixa1[b].setAttribute("style","top:"+ posicaoT[b] +"px;left:"+posicaoL[b]+"px;");
+        salvaCa[b] = caixa1[b];
+        }
+      }else if(b <= guarda2 || verRep[b] == 1){
+      posicaoT[b] += 55;
+      varFila[b] = 5;
+      caixa1[b].setAttribute("style","top:"+posicaoT[b]+"px;left:"+posicaoL[b]+"px;");
+      salvaCa[b] = caixa1[b];
+      }
+    if(posicaoGelL[b] == posicaoL[b] && posicaoGelT[b] == posicaoT[b]){
+      verCriGel[b] = 1;
+    }
+    }
+  verVer[0]=undefined;
+  verVer[1]=undefined;
+  verVer[2]=undefined;
+  con=0;
+  l=0;
+  }
+  setTimeout(cria2,50);
+}
+function treta(caixa,k){
+  
+  var t;
+  for(t=0;t<=x;t++){
+    if(caixa == caixa1[t]){
+      console.log(t)
+      console.log("clicou"+con);
+      console.log("verVer=="+verifica[t]);
+      if(guarda==0 && con==0){
+        guarda = t;
+      }
+      if(guarda1==0 && con==1){
+        guarda1 = t;
+      }
+      if(guarda2==0 && con==2){
+        guarda2 = t;
+      }
+      con+=1
+      checa(caixa,verifica[t]);
+    }
+  }
+}
+function checa(caixa,k){
+  var t;
+  var medPosi=[]
+  var confere,confere1,confere2;
+  var treta=0,treta1=0,treta2=0;
+    vercaixa[l]= caixa;
+    verVer[l]= k;
+    l++
+    if(verVer[0]!=verVer[1] && verVer[1]!=undefined){
+      l=0;
+      verVer[0]=undefined;
+      verVer[1]=undefined;
+      verVer[2]=undefined;
+      guarda=0
+      guarda1=0
+      guarda2=0
+      con=0;
+      treta = 1;
+    }
+    if(verVer[1]!=verVer[2] && verVer[2]!=undefined){
+      l=0;
+      verVer[0]=undefined;
+      verVer[1]=undefined;
+      verVer[2]=undefined;
+      guarda=0
+      guarda1=0
+      guarda2=0
+      con=0;
+      treta1 = 1;
+    }
+    if(verVer[0]!=verVer[2] && verVer[2]!=undefined){
+      l=0;
+      verVer[0]=undefined;
+      verVer[1]=undefined;
+      verVer[2]=undefined;
+      guarda=0
+      guarda1=0
+      guarda2=0
+      con=0;
+      treta2 = 1;
+    }
+    if(treta == 0 && guarda == guarda2){
+      verVer[0]=undefined;
+      verVer[1]=undefined;
+      verVer[2]=undefined;
+      guarda=0;
+      guarda1=0
+      guarda2=0
+      con=0;
+      l=0;
+    }
+    if(treta == 0 && guarda1 == guarda2 && guarda2 != 0){
+      verVer[0]=undefined;
+      verVer[1]=undefined;
+      verVer[2]=undefined;
+      guarda=0;
+      guarda1=0
+      guarda2=0
+      con=0;
+      l=0;
+    }
+    if(treta == 0 && guarda == guarda1){
+      verVer[0]=undefined;
+      verVer[1]=undefined;
+      verVer[2]=undefined;
+      guarda=0;
+      guarda1=0
+      guarda2=0
+      con=0;
+      l=0;
+    }
+    verColi();
+    if(treta == 0 && treta1 == 0 && treta2 == 0 && con == 3){
+    if(guarda != guarda1 && guarda1 != guarda2 && guarda1 != guarda2){
+    if(pimbaColi == 1){
+      for(p=0;p<3;p++){
+      //tela.removeChild(vercaixa[p]);
+      verVer[p]=undefined;
+      l=0;
+    }
+    con=0;
+    pimbaColi = 0;
+    contaJog += 1;
+    var m 
+    var c1,c2,c3
+    var d1=[],d2=[],d3=[]
+    for(m=0;m<40;m++){
+      if(posicaoT[guarda] == posicaoGelT[m] && posicaoL[guarda] == posicaoGelL[m]){
+        tela.removeChild(caixa1Gel[m]);
+        gel ++ 
+        c1 = 1
+        posicaoGelT[m] = 1000
+        posicaoGelL[m] = 1000
+      }
+      if(posicaoT[guarda1] == posicaoGelT[m] && posicaoL[guarda1] == posicaoGelL[m]){
+        tela.removeChild(caixa1Gel[m]);
+        gel ++ 
+        c2 = 1
+        posicaoGelT[m] = 1000
+        posicaoGelL[m] = 1000
+      }
+      if(posicaoT[guarda2] == posicaoGelT[m] && posicaoL[guarda2] == posicaoGelL[m]){
+        tela.removeChild(caixa1Gel[m]);
+        gel ++
+        c3 = 1
+        posicaoGelT[m] = 1000
+        posicaoGelL[m] = 1000
+      }
+    }
+    /*console.log("pimba0")
+    console.log(posicaoT[guarda]+"-----"+posicaoGelT[guarda]);
+    if(posicaoT[guarda] == posicaoGelT[guarda] && posicaoL[guarda] == posicaoGelL[guarda] && verGel[guarda]==undefined){
+      tela.removeChild(caixa1Gel[guarda]);
+      gel ++;
+      verGel[guarda] = 1;
+      console.log("pimba1====="+gel)
+    }
+    console.log(posicaoT[guarda1]+"-----"+posicaoGelT[guarda1]);
+    if(posicaoT[guarda1] == posicaoGelT[guarda1] && posicaoL[guarda1] == posicaoGelL[guarda1] && verGel[guarda1]==undefined){
+      tela.removeChild(caixa1Gel[guarda1]);
+      gel ++;
+      verGel[guarda1] = 1;
+      console.log("pimba2====="+gel)
+    }
+    console.log(posicaoT[guarda2]+"-----"+posicaoGelT[guarda2]);
+    if(posicaoT[guarda2] == posicaoGelT[guarda2] && posicaoL[guarda2] == posicaoGelL[guarda2] && verGel[guarda2]==undefined){
+      tela.removeChild(caixa1Gel[guarda2]);
+      gel ++;
+      verGel[guarda2] = 1;
+      console.log("pimba3====="+gel)
+    }
+    */
+    
+    fila();
+    }else{
+      guarda=0
+      guarda1=0
+      guarda2=0
+      verVer[0]=undefined;
+      verVer[1]=undefined;
+      verVer[2]=undefined;
+      con=0;
+      l=0;
+    }
+  }
+  }
+}
+function verColi(){
+  var varColi,varColi1,varColi2;
+  if(posicaoL[guarda1] == (posicaoL[guarda] + 55) || posicaoL[guarda1] == (posicaoL[guarda] - 55) || posicaoL[guarda] == posicaoL[guarda1]){
+    if(posicaoT[guarda1] == (posicaoT[guarda] + 55) || posicaoT[guarda1] == (posicaoT[guarda] - 55) || posicaoT[guarda] == posicaoT[guarda1]){
+      varColi = 1;
+    }else{
+      varColi =0;
+    }
+  }
+  if(posicaoL[guarda2] == (posicaoL[guarda1] + 55) || posicaoL[guarda2] == (posicaoL[guarda1] - 55) || posicaoL[guarda1] == posicaoL[guarda2]){
+    if(posicaoT[guarda2] == (posicaoT[guarda1] + 55) || posicaoT[guarda2] == (posicaoT[guarda1] - 55) || posicaoT[guarda1] == posicaoT[guarda2]){
+      varColi1 = 1;
+    }
+  }
+  if(posicaoL[guarda2] == (posicaoL[guarda] + 55) || posicaoL[guarda2] == (posicaoL[guarda] - 55) || posicaoL[guarda] == posicaoL[guarda2]){
+    if(posicaoT[guarda2] == (posicaoT[guarda] + 55) || posicaoT[guarda2] == (posicaoT[guarda] - 55) || posicaoT[guarda] == posicaoT[guarda2]){
+      varColi1 = 1;
+    }
+  }
+  if(varColi == 1 && varColi1 == 1){
+    pimbaColi = 1;
+  }else{
+    pimbaColi = 0;
+  }
+}
+
+  </script>
+</html>
