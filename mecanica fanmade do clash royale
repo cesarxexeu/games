@@ -1,0 +1,379 @@
+<div id="tela" onload="cria2()">
+  <div id="castelo1"></div>
+  <div id="castelo2"></div>
+  <div id="cria1" onclick="cria1()"></div>
+  <div id="cria2" onclick="cria2()"></div>
+  <div id="cria1_2" onclick="cria1_2()"></div>
+  <div id="cria2_2" onclick="cria2_2()"></div>
+  <div id="gold">gold=500</div>
+</div>
+
+
+
+
+var castelo1, castelo2, body;
+var soldado1 = [];
+var soldado2 = [3];
+var lMove1, lMove2, lAtt, lColisao, lBriga,lBriga1,lBriga2,lMorte;
+var anda1 = [], anda2 = [];
+var c1y3, c1y4;
+var c2y1, c1y2;
+var s1x1 = [], s1x2 = [], s1x3 = [], s1x4 = [];
+var s1y1 = [], s1y2 = [], s1y3 = [], s1y4 = [];
+var s2x1 = [], s2x2 = [], s2x3 = [], s2x4 = [];
+var s2y1 = [], s2y2 = [], s2y3 = [], s2y4 = [];
+var viSo1 = [], viSo2 = [];
+var atSo1 = [], atSo2 = [];
+var conta1 = 0, conta2 = 0, conta3;
+var y1;
+var y2;
+var verLo;
+var verMor1=[],verMor2=[],verMor2_1=[],verMor2_2=[];
+var brigando1=[],brigando2=[];
+var pausa1=0,pausa2=0,pausa3=0;
+var ambosTreta=[[]];
+var mostra;
+var ver1=0,ver2=0,ver3=0;
+var nSoldado1=[],nSoldado2=[];
+var custo1=[],custo2=[];
+var gold1,gold2;
+var mostraG;
+mostraG = document.getElementById('gold');
+gold1=500,gold2=500;
+pausa1 = 0;
+verLo = 0;
+y1 = 0;
+y2 = 0;
+conta1 = -1, conta2 = -1, conta3 = 0;
+lMove1 = setInterval(move1, 50);
+lMove2 = setInterval(move2, 50);
+lAtt = setInterval(att, 50);
+lColisao = setInterval(colisao, 50);
+lMorte = setInterval(morte, 50);
+body = document.getElementById('tela');
+function cria1() {
+  if(gold1>=50){
+    soldado1.push(y1);
+    nSoldado1.push(y1);
+    gold1 -= 50;
+    s1y1.push(y1);
+    anda1.push(3);
+    viSo1.push(100);
+    atSo1.push(4);
+    verMor1.push(0);
+    brigando1.push(0);
+    s1y1[y1] = 400;
+    soldado1[y1] = document.createElement('div');
+    soldado1[y1].setAttribute("id", "soldado1");
+    body.appendChild(soldado1[y1]);
+  
+    y1 += 1;
+    conta1 += 1;
+  }
+}
+function cria1_2() {
+  if(gold1>=120){
+    soldado1.push(y1);
+    nSoldado1.push(y1);
+    gold1 -= 120;
+    s1y1.push(y1);
+    anda1.push(3);
+    viSo1.push(300);
+    atSo1.push(4);
+    verMor1.push(0);
+    brigando1.push(0);
+    s1y1[y1] = 400;
+    soldado1[y1] = document.createElement('div');
+    soldado1[y1].setAttribute("id", "soldado1_2");
+    body.appendChild(soldado1[y1]);
+  
+    y1 += 1;
+    conta1 += 1;
+  }
+}
+function some(x){
+  body.removeChild(x);
+}
+function cria2() {
+  if(gold2>=50){
+    soldado2.push(y2);
+    nSoldado2.push(y2);
+    s2y1.push(y2);
+    gold2 -= 50;
+    s2y1[y2] = 30;
+    s2y3.push(y2);
+    s2y3[y2] = 60;
+    anda2.push(3);
+    viSo2.push(100);
+    atSo2.push(4);
+    verMor2.push(0);
+    brigando2.push(0);
+    soldado2[y2] = document.createElement('div');
+    soldado2[y2].setAttribute("id", "soldado2");
+    body.appendChild(soldado2[y2]);
+    y2 += 1;
+    conta2 += 1;
+  }
+}
+function cria2_2() {
+  if(gold2>=120){
+    soldado2.push(y2);
+    nSoldado2.push(y2);
+    s2y1.push(y2);
+    s2y1[y2] = 30;
+    gold2 -= 120;
+    s2y3.push(y2);
+    s2y3[y2] = 60;
+    anda2.push(3);
+    viSo2.push(300);
+    atSo2.push(4);
+    verMor2.push(0);
+    brigando2.push(0);
+    soldado2[y2] = document.createElement('div');
+    soldado2[y2].setAttribute("id", "soldado2_2");
+    body.appendChild(soldado2[y2]);
+    y2 += 1;
+    conta2 += 1;
+  }
+}
+function move1() {
+  var x;
+  for (x = 0; x <= conta1; x++) {
+    s1y1[x] -= anda1[x];
+  }
+}
+function move2() {
+  var x;
+  for (x = 0; x <= conta2; x++) {
+    s2y1[x] += anda2[x];
+    s2y3[x] += anda2[x];
+  }
+}
+function att() {
+  var x;
+  gold1 += 0.20
+  gold1 = parseFloat(gold1.toFixed(2));
+  mostraG.innerHTML = "gold="+gold1
+  for (x = 0; x <= conta2; x++) {
+    soldado2[x].setAttribute("style", "top:"+ s2y1[x] +"px;");
+  }
+  for (x = 0; x <= conta1; x++) {
+    soldado1[x].setAttribute("style", "top:"+ s1y1[x] +"px;");
+  }
+
+}
+function colisao() {
+  var x;
+  var brigaCom1=[],brigaCom2=[];
+  var verColi1=[[]],verColi2=[[]];
+  conta3 = conta1 + conta2;
+  for (x = 0; x <= conta3; x++) {
+    for (var y = 0; y <= conta3; y++) {
+      brigaCom1[y] = nSoldado2[x];
+      brigaCom2[x] = nSoldado1[y];
+      verColi2[x,y]=1;
+      if (s2y3[x] >= s1y1[y]) {
+        verColi1[x,y] = 1;
+        setTimeout(verVida,50,x,y);
+        anda1[y] = 0;
+        anda2[x] = 0;
+        if(brigando1[y]==0&&brigando2[x]==0){
+          ambosTreta[x,y] = 1;
+        }
+        if(pausa1==0 && ambosTreta[x,y] == 1){
+          setTimeout(ambosBriga,50,x,y);
+          if(ver1 == 0){
+            ver1 = 1;
+          }
+          brigando1[y]=1;
+          brigando2[x]=1;
+          pausa1=1;
+          
+        }
+        if(pausa2==0 && brigando1[y] == 1 && brigando2[x] == 0){
+          if(ver2 == 0){
+            ver2 = 1;
+          }
+          setTimeout(briga1,50,x,y);
+          pausa2=1;
+        }
+        if(pausa3==0 && brigando1[y] == 0 && brigando2[x] == 1){
+          if(ver2 == 0){
+            ver2 = 1;
+          }
+          setTimeout(briga2,50,x,y);
+          pausa3=1;
+        }
+      }else if(s2y3[x] <= s1y1[y]){
+        if(verColi1[x,y]==0){
+          if(verMor1[y] == 0){
+          anda1[y] = 3;
+          }
+          if(verMor2[x] == 0){
+          anda2[x] = 3;
+          }
+        }
+          console.log("pimba1=="+viSo2[brigaCom1[y]]);
+          if(viSo2[brigaCom1[y]]<=0){
+            if(verMor1[y] == 0){
+            anda1[y] = 3;
+            }
+          }
+          console.log("pimba2=="+viSo1[brigaCom2[x]]);
+          if(viSo1[brigaCom2[x]]<=0){
+            if(verMor2[x] == 0){
+            anda2[x] = 3;
+            }
+        }
+      }
+    }
+  }
+}
+function verVida(x,y){
+  
+}
+function ambosBriga(x,y){
+  viSo1[y] -= atSo2[x];
+  viSo2[x] -= atSo1[y];
+  if(viSo1[y]==0){
+    verMor2_1[y] = 1
+  }
+  if(viSo2[x]==0){
+    verMor2_2[x] = 1
+  }
+  if(viSo1[y]<=0||viSo2[x]<=0){
+    brigando1[y]=1;
+    brigando2[x]=1;
+  }
+  pausa1 = 0;
+}
+function briga1(x,y) { 
+  viSo1[y] -= atSo2[x];
+  pausa2 = 0;
+  brigando1[y] = 1;
+  if(viSo1[y]==0){
+    verMor2_1[y] = 1
+  }
+}
+function briga2(x,y) { 
+  viSo2[x] -= atSo1[y];
+  pausa3 = 0;
+  brigando2[x] = 1;
+  if(viSo2[x]==0){
+    verMor2_2[x] = 1
+  }
+}
+function morte() {
+  conta3 = conta1 + conta2;
+  for (var x = 0; x <= conta1; x++) {
+    if(verMor1[x]!=1){
+      if (viSo1[x] <= 0) {
+      anda1[x] = 0;
+      s1y1[x] = 400;
+      body.removeChild(soldado1[x]);
+      verMor1[x]=1
+      verLo = 0;
+      brigando1[x] = 0;
+      clearInterval(lBriga1);
+    }
+    }
+    if(verMor2[x]!=1){
+      if (viSo2[x] <= 0) {
+      anda2[x] = 0;
+      s2y3[x] = 0;
+      body.removeChild(soldado2[x]);
+      verMor2[x]=1;
+      verLo = 0;
+      brigando2[x] = 0;
+      clearInterval(lBriga2);
+    }
+    }
+  }
+}
+
+
+
+
+body{
+  margin: 0;
+}
+#castelo1{
+  background-color: green;
+  height: 50px;
+  width: 170px;
+  left: 70px;
+  top: 10px;
+  position: absolute;
+}
+#castelo2{
+  background-color: green;
+  height: 50px;
+  width: 170px;
+  left: 70px;
+  top: 400px;
+  position: absolute;
+}
+#soldado1{
+  background-color: red;
+  height: 30px;
+  width: 30px;
+  left: 140px;
+  top: 400px;
+  position: absolute;
+}
+#soldado2{
+  background-color: red;
+  height: 30px;
+  width: 30px;
+  left: 140px;
+  top: 30px;
+  position: absolute;
+}
+#soldado1_2{
+  background-color: orange;
+  height: 30px;
+  width: 30px;
+  left: 140px;
+  top: 400px;
+  position: absolute;
+}
+#soldado2_2{
+  background-color: orange;
+  height: 30px;
+  width: 30px;
+  left: 140px;
+  top: 30px;
+  position: absolute;
+}
+#cria2{
+  background-color: blue;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+}
+#cria1{
+  background-color: blue;
+  height: 50px;
+  width: 50px;
+  top: 410px;
+  position: absolute;
+}
+#cria2_2{
+  background-color: blue;
+  height: 50px;
+  width: 50px;
+  left: 260px;
+  position: absolute;
+}
+#cria1_2{
+  background-color: blue;
+  height: 50px;
+  width: 50px;
+  top: 410px;
+  left: 260px;
+  position: absolute;
+}
+#gold{
+  position: absolute;
+  left: 320px;
+}
