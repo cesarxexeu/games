@@ -1,0 +1,439 @@
+<html>
+<head>
+<title>tretaa</title>
+</head>
+<body  onLoad="menu()">
+<script type="text/javascript">
+var vida = 3;
+var p1=[];
+var p2=[];
+var pop=[]
+var dif = 2;
+var aDif = 0;
+var aVPimba = 0;
+var cDif = 0;
+var y = 0;
+var x = 0;
+var z = 0; 
+var v1 = 0;
+var v2 = 0;
+var v3 = 0;
+var v4 = 0;
+var v5 = 0;
+var v6 = 0;
+var v7 = 0;
+var v7 = 0;
+var v8 = 0;
+var v9 = 0;
+var v10 = 0;
+var v11 = 0;
+var v12 = 0;
+var v13 = 0;
+var v14 = 0;
+var v15 = 0;
+var v16 = 0;
+var v17 = 0;
+var v18 = 0;
+var v19 = 0;
+var exp1,exp2;
+var verEstAzu = 0;
+var variaB = [];
+var verBom = [];
+var pop2 = [];
+var vPimba = 2300;
+var exc=[];
+var telaJogo,telaJogo2,telaInicio;
+var telaMenu,Biniciar,telaFim;
+var bola;
+var balao=[];
+var balaoV=[];
+var a = [];
+var b = [];
+var batata;
+var lOla2 
+var altura;
+var largura;
+var mVidas;
+var mScore;
+
+function dimensionar(){
+	altura = window.innerHeight;
+	largura = window.innerWidth;
+	altura = altura - 25;
+	telaJogo = document.getElementById('telaJogo2');
+	telaJogo.setAttribute("style","height:"+altura+";width:"+largura+";background-size: cover;");
+}
+function menu(){
+	dimensionar();
+	telaFim = document.getElementById('game_over');
+	telaFim.setAttribute("style","display: none");
+	telaMenu = document.getElementById('menu');
+	telaMenu.setAttribute("style","display:block;");
+	telaMenu.setAttribute("style","height:"+altura+";width:"+largura+";");
+	Biniciar = document.getElementById('Biniciar');
+	var Baltura,Blargura;
+	Baltura = altura /2;
+	Blargura = largura /2;
+	Blargura = Blargura - 50;
+	Biniciar.setAttribute("style","top:"+Baltura+"px;left:"+Blargura+"px;");
+	Breiniciar = document.getElementById('Breiniciar');
+	Breiniciar.setAttribute("style","top:"+Baltura+"px;left:"+Blargura+"px;");
+
+}
+function ola(){
+	v15 = 0;
+	v13 = 0;
+	y=0;
+	v14 = 0;
+	vPimba = 2300;
+	balao.length = 0;
+	a.length = 0;
+	b.length = 0;
+	p2.length = 0;
+	pop.length = 0;
+	dif = 2;
+	z = 0;
+	mScore = document.getElementById('mScore');
+	mScore.setAttribute("style","display: block;");
+	mVidas = document.getElementById('mVidas');
+	mVidas.setAttribute("style","display: block;");
+	vida = 3;
+	lOla2 = setInterval(ola2,50);
+	telaFim.setAttribute("style","display: none;");
+	telaMenu.setAttribute("style","display: none;");
+	bola = setInterval(espBalao, 250 );
+}
+function espBalao(){
+	if(v14 == 0){
+		setTimeout(addBalao,vPimba);
+		v14 = 1;
+	}
+}
+function addBalao(){
+	telaJogo2 = document.getElementById('telaJogo2');
+	p2.push(0);
+	p1.push(0);
+	a.push(1);
+	b.push(1);
+	balao.push(0);
+	balaoV.push(0);
+	var v4 = largura - 120;
+	p1[y] = Math.floor(Math.random() * v4);
+	batata = "balao" +y;
+	var addBY = altura - 143;
+	v16 = Math.floor(Math.random() * 8);
+	if(v16 <=3 ){
+		balao[y] = document.createElement('div');
+		balao[y].setAttribute("id",batata);
+		balao[y].setAttribute("style","top:"+addBY+"px; position: absolute; width: 120px; height: 120px; left:"+p1[y]+"px;background-image: url('img/balao1.png')");
+		balao[y].setAttribute("onMouseDown","estourar2(this)");
+		balao[y].setAttribute("ontouchstart","estourar2(this)");
+		variaB[y] = 0;
+		if(v15 == 0){
+			telaJogo2.appendChild(balao[y]);
+		}
+	}
+	if(v16 >3 && v16 < 6){
+		balao[y] = document.createElement('div');
+		balao[y].setAttribute("id",batata);
+		balao[y].setAttribute("style","top:"+addBY+"px; position: absolute; width: 129px; height: 120px; left:"+p1[y]+"px;background-image: url('img/balaoVerde1.PNG')");
+		balao[y].setAttribute("onMouseDown","estourar(this)");
+		balao[y].setAttribute("ontouchstart","estourar(this)");
+		variaB[y] = 1;
+		if(v15 == 0){
+			telaJogo2.appendChild(balao[y]);
+		}
+	}
+	if(v16 == 6){
+		balao[y] = document.createElement('div');
+		balao[y].setAttribute("id",batata);
+		balao[y].setAttribute("style","top:"+addBY+"px; position: absolute; width: 60px; height: 60px; left:"+p1[y]+"px;background-color: red");
+		balao[y].setAttribute("onMouseDown","estourar3(this)");
+		balao[y].setAttribute("ontouchstart","estourar3(this)");
+		variaB[y] = 2;
+		verBom[y] = 1;
+		if(v15 == 0){
+			telaJogo2.appendChild(balao[y]);
+		}
+	}
+	if(v16 == 7){
+		balao[y] = document.createElement('div');
+		balao[y].setAttribute("id",batata);
+		balao[y].setAttribute("style","top:"+addBY+"px; position: absolute; width: 60px; height: 60px; left:"+p1[y]+"px;background-color: blue");
+		balao[y].setAttribute("onMouseDown","estourar4(this)");
+		balao[y].setAttribute("ontouchstart","estourar4(this)");
+		variaB[y] = 3;
+		verBom[y] = 1;
+		if(v15 == 0){
+			telaJogo2.appendChild(balao[y]);
+		}
+	}
+
+	y++;
+	v14 = 0;
+
+}
+function ola2(){
+	x=0;
+	while(x<y){
+		b[x] = altura - 170 - a[x];
+		if(variaB[x] == 0){
+			a[x] = a[x] + dif;
+		}
+		if(variaB[x] == 1){
+			a[x] = a[x] + dif * 2;
+		}
+		if(variaB[x] == 2){
+			a[x] = a[x] + dif;
+		}
+		if(variaB[x] == 3){
+			a[x] = a[x] + dif;
+		}
+		p2[x] = b[x];
+		if(verEstAzu == 1){
+			if(pop2[v18]==balao[x]){
+				exp1 = p2[x] - 20;
+				exp2 = p2[x] + 50;
+				pop.push(0);
+				pop[v1] = balao[x];
+				v1++;
+				telaJogo2.removeChild(balao[x]);
+				verEstAzu = 0;
+			}
+			for(v3=0;v3<v2;v3++){
+				if(balao[x]==pop[v3] || balao[x]==pop2[v3]){
+					v19 = 1;
+				}
+			}
+			if(p2[x]>exp1 && p2[x]<exp2 && v19 == 0){
+				pop.push(0);
+				pop[v1] = balao[x];
+				v1++;
+				verEstAzu = 0;
+				telaJogo2.removeChild(balao[x]);
+			}
+			v19 = 0;
+		}
+		if(p2[x]<50&& x==z){
+			for(v3=0;v3<v2;v3++){
+				if(balao[x]==pop[v3]){
+					v4 = 1;
+				}
+			}
+			if(v4 == 0){
+				exc.push(0);
+				balao[x].setAttribute("id","excluido");
+				exc[v11] = balao[x];
+				v11++;
+				telaJogo2.removeChild(balao[x]);
+				if(verBom[x] != 1){
+					vida = vida - 1;
+				}
+				v5++;
+			}else{
+				v4 = 0;
+			}
+			z++;
+		}
+		atualiza();
+		vGameOver();
+		x++;
+	}
+}
+function atualiza(){
+	if(verEstAzu == 1){
+
+	}
+	if(x<y){
+		if(variaB[x] == 0){
+			balao[x].setAttribute("style","top:"+p2[x]+"px; position: absolute; width: 120px; height: 120px; left:"+p1[x]+"px;background-image: url('img/balao1.png')");
+		}
+		if(variaB[x] == 1){
+			balao[x].setAttribute("style","top:"+p2[x]+"px; position: absolute; width: 120px; height : 120px; left:"+p1[x]+"px;background-image: url('img/balaoVerde1.PNG')");
+		}
+		if(variaB[x] == 2){
+			balao[x].setAttribute("style","top:"+p2[x]+"px; position: absolute; width: 60px; height: 60px; left:"+p1[x]+"px;background-color: red");
+		}
+		if(variaB[x] == 3){
+			balao[x].setAttribute("style","top:"+p2[x]+"px; position: absolute; width: 60px; height: 60px; left:"+p1[x]+"px;background-color: blue");
+		}
+		
+	}
+	document.getElementById('mVidas').innerHTML = "vidas: "+vida;
+	document.getElementById('mScore').innerHTML = "score: "+v13;
+
+}
+function vGameOver(){
+	if(vida <= 0){
+		if(v9 == 0){
+			gameOver();
+
+		}else{
+			setTimeout(function(){
+				v9=0;
+			},100);
+		}
+	}
+}
+function gameOver(){
+	v15 = 1;
+	v9++;
+	telaFim.setAttribute("style","display: block; height:"+altura+"px;width:"+largura+"px;");
+	mScore = document.getElementById('mScore');
+	mScore.setAttribute("style","display: none;");
+	mVidas = document.getElementById('mVidas');
+	mVidas.setAttribute("style","display: none;");
+	clearInterval(bola);
+	clearInterval(lOla2);
+	for( v8=0;v8<y;v8++){
+		for( v6=0;v6<v2;v6++){
+			if(balao[v8]==pop[v6]){
+				v7=1;
+			}
+		}
+		for(v10=0;v10<v11;v10++){
+			if(balao[v8]==exc[v10]){
+				v7=1;
+			}
+		}
+		if(v7==0){
+			telaJogo2.removeChild(balao[v8]);
+		}else{
+			v7=0;
+		}
+
+	}
+	for(var x=0;x<v2;x++){
+		pop[x]=0;
+	}
+	y=0;
+
+}
+function estourar(elemento){
+	pop.push(0);
+	pop[v1] = elemento;
+	telaJogo2.removeChild(pop[v1]);
+	v1++;
+	v2++;
+	v13++;
+	cDif++;
+	if (cDif >=5) {
+		if(dif < 6){
+			aDif = dif / 4;
+			dif = dif + aDif;
+			aVPimba = vPimba / 4;
+			vPimba = vPimba - aVPimba;
+			cDif = 0;
+		}
+	}
+}
+function estourar2(elemento){
+	pop.push(0);
+	pop[v1] = elemento;
+	telaJogo2.removeChild(pop[v1]);
+	v1++;
+	v2++;
+	v13++;
+	cDif++;
+	if (cDif >=5) {
+		if(dif < 6){
+			aDif = dif / 4;
+			dif = dif + aDif;
+			aVPimba = vPimba / 4;
+			vPimba = vPimba - aVPimba;
+			cDif = 0;
+		}
+	}
+}
+function estourar3(elemento){
+	pop.push(0);
+	vida = 0;
+	pop[v1] = elemento;
+	telaJogo2.removeChild(pop[v1]);
+	v1++;
+	v2++;
+	v13++;
+	cDif++;
+	if (cDif >=5) {
+		if(dif < 6){
+			aDif = dif / 4;
+			dif = dif + aDif;
+			aVPimba = vPimba / 4;
+			vPimba = vPimba - aVPimba;
+			cDif = 0;
+		}
+	}
+}
+function estourar4(elemento){
+	pop2.push(0)
+	verEstAzu = 1;
+	v19 = 1;
+	pop2[v18] = elemento;
+	ola2();
+	v18++;
+	v13++;
+	v2++;
+	cDif++;
+		if (cDif >=5) {
+		if(dif < 6){
+			aDif = dif / 4;
+			dif = dif + aDif;
+			aVPimba = vPimba / 4;
+			vPimba = vPimba - aVPimba;
+			cDif = 0;
+		}
+	}
+	
+}
+</script>
+<style>
+body{
+	margin: 0px;
+}
+#telaJogo2{
+	height: 1480px;
+	width: 720px;
+	background-image: url('img/fundo.png');
+	background-size: auto auto;
+	background-position: center;
+	position: absolute;
+	margin: 0px;
+}
+#menu{
+	height: 300px;
+	width: 300px;
+	background-color: green;
+	position: absolute;
+	margin:  0px;
+}
+#Biniciar{
+	height: 50px;
+	width: 100px;
+	background-color: red;
+	position: absolute;
+}
+#game_over{
+	background-color: red;
+	position: absolute;
+	margin: 0px;
+}
+#Breiniciar{
+	height: 50px;
+	width: 100px;
+	background-color: red;
+	position: absolute;
+}
+</style>
+<div id="telaJogo2">
+	<div id="menu">
+		<button onClick="ola()" id="Biniciar">iniciar</button>
+	</div>
+	<div id="mVidas">vidas: 3</div>
+	<div id="mScore">score: 0</div>
+	<div id="barra1"></div>
+	<div id="game_over">voce perdeu
+		<button onClick="ola()" id="Breiniciar">reiniciar</button>
+	</div>
+</div>
+</body>
+</head>
