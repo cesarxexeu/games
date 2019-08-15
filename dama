@@ -1,0 +1,481 @@
+<html>
+<body id="body">
+
+
+
+ 
+<style>
+#branco{
+height:50px;
+width:50px;
+background-color:#e0e094;
+position: absolute;
+}
+#preto{
+height:50px;
+width:50px;
+background-color:black;
+position: absolute;
+}
+
+body{
+  margin: 0;
+  background-color: white;
+}
+#pecaBran{
+  height:50px;
+width:50px;
+background-color:green;
+position: absolute;
+border-radius: 25px;
+
+
+}
+#damaPecaBran{
+    height:50px;
+width:50px;
+background-color:green;
+position: absolute;
+border-radius:45px;
+border-style: solid;
+border-width: 2px;
+border-color: white
+}
+#pecaPre{
+  height:50px;
+width:50px;
+background-color:red;
+position: absolute;
+border-radius: 25px;
+
+
+}
+#damaPecaPre{
+    height:50px;
+width:50px;
+background-color:red;
+position: absolute;
+border-radius:45px;
+border-style: solid;
+border-width: 2px;
+border-color: white
+}
+</style>
+<script>
+var casa=[],cor=[];
+var topo=0, left=0;
+var body=document.getElementById("body")
+var loop
+var globalPecaV
+var pecaV
+var peca=[];
+var guardaLeft=[], guardaTopo=[], guardaCasaLeft=[], guardaCasaTopo=[];
+var guardaLeftDef, guardaTopoDef, guardaCasaLeftDef, guardaCasaTopoDef;
+var guardaCasaCor=[], guardaPecaCor=[]
+var guardaCasaCorDef, guardaPecaCorDef;
+var pimba
+var destruPeca
+var loopDama
+var guardaDama=[],guardadamaDef,destruDama
+var movimentou
+loopDama = setInterval(verificaDama,100)
+geraTab()
+geraPecaVerde()
+geraPecaVermelha()
+function geraTab (){
+var x
+var a = 0,b = 1,c=0,d;
+for(x=0; x<=63; x++) {
+  if(a >=8){
+    a=0;
+    left += 50;
+    topo = 0;
+    if(d==0){
+      c=0
+    }
+    if(d==1){
+      c=1
+    }
+
+  }
+  if(c==0){
+    casa[x]=document.createElement("div")
+    casa[x].setAttribute("id","branco")
+    casa[x].setAttribute("style","top:"+topo+"px; left:"+left+"px;")
+    casa[x].setAttribute("onmousedown","aterrisa(this)")
+    guardaCasaLeft[x]=left
+    guardaCasaTopo[x]=topo
+    guardaCasaCor[x]=0
+    body.appendChild(casa[x])
+    cor[x]=0
+    topo += 50;
+    b=0;
+    d=0
+  }
+  if(c==1){
+    casa[x]=document.createElement("div")
+    casa[x].setAttribute("id","preto")
+    casa[x].setAttribute("style","top:"+topo+"px;left:" +left+"px;")
+    casa[x].setAttribute("onmousedown","aterrisa(this)")
+    guardaCasaLeft[x]=left
+    guardaCasaTopo[x]=topo
+    guardaCasaCor[x]=1
+    body.appendChild(casa[x])
+    cor[x]=1
+    topo+=50;
+    b=1;
+    d=1
+  }
+  a++
+  if(c==1){
+    c=0
+  }else {
+    c++
+  }
+}
+}
+function geraPecaVerde(){
+var topoP=0;leftP=0;
+var x
+var a = 0,b = 1,c=0,d;
+var corPeca=[x];
+for(x=0;x<=63;x++){
+  if(a>= 8){
+      a=0;
+    leftP += 50;
+    topoP = 0;
+    if(d==0){
+      c=0
+    }
+    if(d==1){
+      c=1
+    }
+  }
+  if(cor[x]==1){
+    if(topoP <= 100){
+      peca[x]=document.createElement("div")
+      peca[x].setAttribute("id","pecaBran")
+      peca[x].setAttribute("style","top:"+topoP+"px; left:"+leftP+"px;")
+      peca[x].setAttribute("onmousedown", "mexePeca(this)")
+      guardaTopo[x]=topoP
+      guardaLeft[x]=leftP
+      guardaPecaCor[x]=1
+      body.appendChild(peca[x])
+      peca[x].innerHTML = x
+      corPeca[x]=0
+      b=0;
+      d=0
+    }
+  }
+  topoP += 50;
+  a++
+
+}
+}
+function geraPecaVermelha(){
+var topoP=0;leftP=0;
+var x
+var a = 0,b = 1,c=0,d;
+var corPeca=[x];
+for(x=0;x<=63;x++){
+  if(a>= 8){
+      a=0;
+    leftP += 50;
+    topoP = 0;
+    if(d==0){
+      c=0
+    }
+    if(d==1){
+      c=1
+    }
+  }
+  if(cor[x]==1){
+    if(topoP >= 250){
+      peca[x]=document.createElement("div")
+      peca[x].setAttribute("id","pecaPre")
+      peca[x].setAttribute("style","top:"+topoP+"px; left:"+leftP+"px;")
+      peca[x].setAttribute("onmousedown", "mexePeca(this)")
+      guardaTopo[x]=topoP
+      guardaLeft[x]=leftP
+      guardaPecaCor[x]=2
+      body.appendChild(peca[x])
+      peca[x].innerHTML = x
+      corPeca[x]=1
+      b=0;
+      d=0
+    }
+  }
+  topoP += 50;
+  a++
+
+}
+}
+function mexePeca(pecaV){
+ verificaPeca(pecaV)
+}
+function verificaPeca(pecaV){
+var l
+for(l=0;l<=63;l++){
+if (peca[l] == pecaV){
+guardaLeftDef=guardaLeft[l];
+guardaTopoDef=guardaTopo[l];
+guardaPecaCorDef=guardaPecaCor[l]
+guardaDamaDef=guardaDama[l];
+globalPecaV = pecaV
+
+}
+}
+}
+function aterrisa(casaV){
+var l
+for(l=0;l<=63;l++){
+if (casa[l] == casaV){
+guardaCasaLeftDef=guardaCasaLeft[l];
+guardaCasaTopoDef=guardaCasaTopo[l];
+guardaCasaCorDef = guardaCasaCor[l]
+movimento()
+}
+}
+}
+function movimento(){
+  movimentou = 0
+  var destruiu = 0
+  if((guardaLeftDef + 50 ) ==guardaCasaLeftDef || (guardaLeftDef - 50 ) ==guardaCasaLeftDef || (guardaLeftDef - 50 ) ==guardaCasaLeftDef || (guardaTopoDef + 50 ) ==guardaCasaTopoDef || (guardaTopoDef - 50 ) ==guardaCasaTopoDef ){
+   console.log(guardaTopoDef +"--"+ guardaCasaTopoDef)
+   if((guardaLeftDef + 50) == guardaCasaLeftDef || (guardaLeftDef -50) == guardaCasaLeftDef){
+   if ((guardaTopoDef - 50) == guardaCasaTopoDef && guardaPecaCorDef == 2){
+       globalPecaV.setAttribute("style","left:"+guardaCasaLeftDef+"px;top:"+guardaCasaTopoDef+"px;");
+      var l
+      for(l=0;l<=63;l++){
+      if (peca[l] == globalPecaV){
+      guardaLeft[l]=guardaCasaLeftDef;
+      guardaTopo[l]=guardaCasaTopoDef;
+      movimentou = 1
+      }
+      }
+  }
+  }
+  if((guardaLeftDef + 50) == guardaCasaLeftDef || (guardaLeftDef -50) == guardaCasaLeftDef){
+  if ((guardaTopoDef + 50) == guardaCasaTopoDef && guardaPecaCorDef == 1){
+    console.log("lul1")
+    globalPecaV.setAttribute("style","left:"+guardaCasaLeftDef+"px;top:"+guardaCasaTopoDef+"px;");
+
+      var l
+      for(l=0;l<=63;l++){
+        if (peca[l] == globalPecaV){
+        guardaLeft[l]=guardaCasaLeftDef;
+        guardaTopo[l]=guardaCasaTopoDef;
+        movimentou = 1
+        console.log("lul2")
+        }
+      }
+   }
+   }
+   
+  }
+      if ((guardaLeftDef + 100 ) ==guardaCasaLeftDef || (guardaLeftDef - 100 ) ==guardaCasaLeftDef || (guardaLeftDef - 100 ) ==guardaCasaLeftDef || (guardaTopoDef + 100 ) ==guardaCasaTopoDef || (guardaTopoDef - 100 ) ==guardaCasaTopoDef ){
+        pimba=0
+  for (l=0;l<=63;l++){
+    if(guardaCasaLeftDef > guardaLeftDef && guardaCasaTopoDef < guardaTopoDef){
+      if(guardaLeft[l]==(guardaCasaLeftDef-50) && guardaTopo[l]==(guardaCasaTopoDef+50) &&guardaPecaCor[l] != undefined){
+      destruPeca = peca[l]
+      guardaLeft[l]=0
+      guardaTopo[l]=0
+      pimba=1
+    }
+    }
+    if(guardaCasaLeftDef > guardaLeftDef && guardaCasaTopoDef > guardaTopoDef){
+      if(guardaLeft[l]==(guardaCasaLeftDef-50) && guardaTopo[l]==(guardaCasaTopoDef-50) &&guardaPecaCor[l] != undefined){
+      destruPeca = peca[l]
+      guardaLeft[l]=0
+      guardaTopo[l]=0
+      pimba=1
+    }
+    }
+    if(guardaCasaLeftDef < guardaLeftDef && guardaCasaTopoDef > guardaTopoDef){
+      if(guardaLeft[l]==(guardaCasaLeftDef+50) && guardaTopo[l]==(guardaCasaTopoDef-50) &&guardaPecaCor[l] != undefined){
+      destruPeca = peca[l]
+      guardaLeft[l]=0
+      guardaTopo[l]=0
+      pimba=1
+    }
+    }
+    if(guardaCasaLeftDef < guardaLeftDef && guardaCasaTopoDef < guardaTopoDef){
+      if(guardaLeft[l]==(guardaCasaLeftDef+50) && guardaTopo[l]==(guardaCasaTopoDef+50) &&guardaPecaCor[l] != undefined){
+      destruPeca = peca[l]
+      guardaLeft[l]=0
+      guardaTopo[l]=0
+      pimba=1
+    }
+    }
+  }
+      if (pimba==1){
+        globalPecaV.setAttribute("style","left:"+guardaCasaLeftDef+"px;top:"+guardaCasaTopoDef+"px;");
+        var l
+        for(l=0;l<=63;l++){
+        if (peca[l] == globalPecaV){
+        guardaLeft[l]=guardaCasaLeftDef;
+        guardaTopo[l]=guardaCasaTopoDef;
+}
+}
+        body.removeChild(destruPeca)
+        destruiu = 1
+      }
+  }
+    if(guardaDamaDef==1 && destruiu == 0 && movimentou == 0){
+      var catapimba = 0
+      var permiMove = 0
+      console.log("ola1")
+      console.log(guardaCasaLeftDef+"---"+guardaLeftDef)
+      console.log(guardaCasaTopoDef+"----"+guardaTopoDef)
+      if(guardaCasaLeftDef > guardaLeftDef && guardaCasaTopoDef < guardaTopoDef){
+        console.log("ola2")
+        var x
+        var guardaLeftProvi,guardaTopoProvi
+        guardaLeftProvi = guardaLeftDef + 50 
+        guardaTopoProvi = guardaTopoDef - 50
+        for (x=0;x<10 && guardaTopoProvi >= guardaCasaTopoDef;x++){
+          console.log("ola3")
+          if(guardaTopoProvi == guardaCasaTopoDef && guardaLeftProvi == guardaCasaLeftDef){
+            console.log("abalabadubdub"+x)
+            permiMove = 1
+          }
+          if(guardaTopoProvi <= guardaCasaTopoDef){
+            x=10
+          }
+          var l
+          for(l=0;l<=63;l++){
+            if(guardaLeft[l] == guardaLeftProvi && guardaTopo[l] == guardaTopoProvi){
+              console.log("catapimba---1-"+l)
+              destruDama = peca[l]
+              catapimba = 1
+              l = 64;
+            }
+          }
+        guardaLeftProvi += 50;
+        guardaTopoProvi -= 50;
+        }
+      }
+      if(guardaCasaLeftDef > guardaLeftDef && guardaCasaTopoDef > guardaTopoDef){
+        console.log("ola2")
+        var x
+        var guardaLeftProvi,guardaTopoProvi
+        guardaLeftProvi = guardaLeftDef + 50 
+        guardaTopoProvi = guardaTopoDef + 50
+        for (x=0;x<10 && guardaTopoProvi <= guardaCasaTopoDef;x++){
+          if(guardaTopoProvi == guardaCasaTopoDef && guardaLeftProvi == guardaCasaLeftDef){
+            console.log("abalabadubdub")
+            permiMove = 1
+          }
+         
+          if(guardaTopoProvi >= guardaCasaTopoDef){
+            x=10
+          }
+          var l
+          for(l=0;l<=63;l++){
+            if(guardaLeft[l] == guardaLeftProvi && guardaTopo[l] == guardaTopoProvi){
+              console.log("catapimba---2---"+l)
+              destruDama = peca[l]
+              catapimba = 1
+              l = 64;
+            }
+          }
+          guardaLeftProvi += 50;
+          guardaTopoProvi += 50;
+        }
+      }
+      if(guardaCasaLeftDef < guardaLeftDef && guardaCasaTopoDef > guardaTopoDef){
+        console.log("ola2")
+        var x
+        var guardaLeftProvi,guardaTopoProvi
+        guardaLeftProvi = guardaLeftDef -50 
+        guardaTopoProvi = guardaTopoDef + 50
+        for (x=0;x<10 && guardaTopoProvi <= guardaCasaTopoDef;x++){
+          if(guardaTopoProvi == guardaCasaTopoDef && guardaLeftProvi == guardaCasaLeftDef){
+            console.log("abalabadubdub")
+            permiMove = 1
+          }
+         
+          if(guardaTopoProvi >= guardaCasaTopoDef){
+            x=10
+          }
+          var l
+          for(l=0;l<=63;l++){
+            if(guardaLeft[l] == guardaLeftProvi && guardaTopo[l] == guardaTopoProvi){
+              console.log("catapimba---3---"+l)
+              destruDama = peca[l]
+              catapimba = 1
+              l = 64;
+            }
+          }
+          guardaLeftProvi -= 50;
+          guardaTopoProvi += 50;
+        }
+      }
+      if(guardaCasaLeftDef < guardaLeftDef && guardaCasaTopoDef < guardaTopoDef){
+        console.log("ola2")
+        var x
+        var guardaLeftProvi,guardaTopoProvi
+        guardaLeftProvi = guardaLeftDef - 50
+        guardaTopoProvi = guardaTopoDef -50
+        for (x=0;x<10 && guardaTopoProvi >= guardaCasaTopoDef;x++){
+          if(guardaTopoProvi == guardaCasaTopoDef && guardaLeftProvi == guardaCasaLeftDef){
+            console.log("abalabadubdub")
+            permiMove = 1
+          }
+          if(guardaTopoProvi <= guardaCasaTopoDef){
+            x=10
+          }
+          console.log("ola3")
+          var l
+          for(l=0;l<=63;l++){
+            if(guardaLeft[l] == guardaLeftProvi && guardaTopo[l] == guardaTopoProvi){
+              console.log("catapimba--4---"+l)
+              destruDama = peca[l]
+              catapimba = 1
+              l = 64;
+            }
+          }
+          guardaLeftProvi -= 50;
+          guardaTopoProvi -= 50;
+        }
+      }
+
+    if(catapimba == 1){
+      body.removeChild(destruDama)
+      for(l=0;l<=63;l++){
+        if (peca[l] == destruDama){
+        guardaLeft[l]=0;
+        guardaTopo[l]=0;
+        }
+      }
+    }
+    if(permiMove == 1){
+    console.log("batata")
+    globalPecaV.setAttribute("style","left:"+guardaCasaLeftDef+"px;top:"+guardaCasaTopoDef+"px;")
+    var l
+      for(l=0;l<=63;l++){
+        if (peca[l] == globalPecaV){
+        guardaLeft[l]=guardaCasaLeftDef;
+        guardaTopo[l]=guardaCasaTopoDef;
+        }
+      }
+    }
+    }
+  }
+function verificaDama(){
+  var l
+  for(l=0;l<=63;l++){
+    if(guardaTopo[l]==0 && guardaPecaCor[l] == 2){
+      peca[l].setAttribute("id","damaPecaPre")
+      guardaDama[l]= 1
+
+    }
+    if(guardaTopo[l]==350 && guardaPecaCor[l] == 1){
+      peca[l].setAttribute("id","damaPecaBran")
+      guardaDama[l]= 1
+    }
+  }
+}
+</script>
+</html>
