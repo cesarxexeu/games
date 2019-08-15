@@ -1,0 +1,243 @@
+<html>
+<div>
+  <div id="up" onmouseout="stop()" onmousedown="lUp()" onmouseup="pLUp()" ></div>
+  <div id="down" onmouseout="stop()" onmousedown="lDown()" onmouseup="pLDown()"></div>
+  <div id="left" onmouseout="stop()" onmousedown="lLeft()" onmouseup="pLLeft()"></div>
+  <div id="right" onmouseout="stop()" onmousedown="lRight()" onmouseup="pLRight()"></div>
+  <div id="objeto"></div>
+  <div id="obst1"></div>
+  <div id="obst2"></div>
+  <div id="obst3"></div>
+  <div id="obst4"></div>
+  <div id="obst5"></div>
+  <div id="obst6"></div>
+  <div id="chegada"></div>
+</div>
+
+
+
+
+<script>
+var topo,esquerda;
+var objeto;
+var conta1 = 0;
+//variaveis comandos
+var leftL,downL,upL,rightL;
+//variaveis hit box
+//caixa:
+var bx1,bx2,bx3,bx4;
+var by1,by2,by3,by4;
+bx1 = 58;
+bx2 = 98;
+bx3 = 98;
+bx4 = 58;
+by1 = 130;
+by2 = 130;
+by3 = 170;
+by4 = 170;
+//obstaculos
+var ox1_1,ox1_2,ox1_3,ox1_4;
+var oy1_1,oy1_2,oy1_3,oy1_4;
+ox1_1 = 48;
+oy1_1 = 130;
+oy1_2 = 530;
+oy1_3 = 490;
+topo = 130;
+esquerda = 58;
+objeto = document.getElementById('objeto');
+//controles
+var loopVer;
+loopVer = setInterval(ver,10);
+function ver(){
+  if(bx1 <= ox1_1 && by1 >= oy1_1 && by1 <= oy1_2){
+    if(conta1 == 0){
+    console.log("pimba");
+    clearInterval(upL);
+    clearInterval(downL);
+    clearInterval(leftL);
+    clearInterval(rightL);
+      conta1 = 1;
+    }
+  }else{
+    conta1 = 0;
+  }
+  if(by3 >= oy1_3){
+    if(conta1 == 0){
+      console.log("pimba");
+      clearInterval(upL);
+      clearInterval(downL);
+      clearInterval(leftL);
+      clearInterval(rightL);
+      
+      conta1 = 1;
+    }
+  }else{
+    conta1 = 0;
+  }
+}
+function lUp(){
+  upL = setInterval(up,30);
+}
+function pLUp(){
+  clearInterval(upL);
+}
+function up(){
+  topo = topo - 3;
+  objeto.setAttribute("style","top:"+topo+"px;left:"+esquerda+"px;");
+  by1 -= 3;
+  by1 -= 3;
+  by1 -= 3;
+  by1 -= 3;
+}
+function lDown(){
+  downL = setInterval(down,30);
+}
+function pLDown(){
+  clearInterval(downL);
+}
+function down(){
+  topo = topo + 3;
+  objeto.setAttribute("style","top:"+topo+"px;left:"+esquerda+"px;");
+  by1 += 3;
+  by2 += 3;
+  by3 += 3;
+  by4 += 3;
+     
+}
+function lLeft(){
+  leftL = setInterval(left,30);
+}
+function pLLeft(){
+  clearInterval(leftL);
+}
+function left(){
+  esquerda = esquerda - 3;
+  objeto.setAttribute("style","left:"+esquerda+"px;top:"+topo+"px;");
+  bx1 -= 3;
+  bx2 -= 3;
+  bx3 -= 3;
+  bx4 -= 3;
+}
+function lRight(){
+  rightL = setInterval(right,30);
+}
+function pLRight(){
+  clearInterval(rightL);
+}
+function right(){
+  esquerda = esquerda + 3;
+  objeto.setAttribute("style","left:"+esquerda+"px;top:"+topo+"px;");
+  bx1 += 3;
+  bx2 += 3;
+  bx3 += 3;
+  bx4 += 3;
+}
+function stop(){
+  clearInterval(upL);
+  clearInterval(downL);
+  clearInterval(leftL);
+  clearInterval(rightL);
+}
+function colisao(){
+  
+}
+</script>
+
+
+<style>
+#up{
+  background-color: red;
+  height: 50px;
+  width: 50px;
+  left: 58px;
+  position: absolute;
+}
+#down{
+  background-color: blue;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: 58px;
+  left: 58px;
+}
+#left{
+  background-color: green;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: 58px;
+  
+}
+#right{
+  background-color: yellow;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: 58px;
+  left: 108px;
+}
+#objeto{
+  background-color: purple;
+  height: 40px;
+  width: 40px;
+  top: 130px;
+  left: 58px;
+  position: absolute;
+}
+#obst1{
+  background-color: orange;
+  height: 400px;
+  width: 40px;
+  top: 130px;
+  position: absolute;
+}
+#obst2{
+  background-color: orange;
+  height: 300px;
+  width: 40px;
+  top: 130px;
+  left: 110px;
+  position: absolute;
+}
+#obst3{
+  background-color: orange;
+  height: 40px;
+  width: 398px;
+  top: 490px;
+  left: 40px;
+  position: absolute;
+}
+#obst4{
+  background-color: orange;
+  height: 40px;
+  width: 190px;
+  top: 390px;
+  left: 148px;
+  position: absolute;
+}
+#obst5{
+  background-color: orange;
+  height: 400px;
+  width: 40px;
+  top: 130px;
+  left: 398px;
+  position: absolute;
+}
+#obst6{
+  background-color: orange;
+  height: 300px;
+  width: 40px;
+  top: 130px;
+  left: 298px;
+  position: absolute;
+}
+#chegada{
+  background-color: green;
+  height: 70px;
+  width: 140px;
+  left: 298px;
+  top: 60px;
+  position: absolute;
+}
+</style>
+</html>
